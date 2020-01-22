@@ -1,0 +1,75 @@
+.new_button {
+    margin-top: -4px;
+}
+.new_button a.btn.btn-info {
+    padding: 5px 10px;
+    font-size: 13px;
+    display: inline-block;
+}
+div.ColVis{
+    margin-bottom: 0px;
+}
+.table-striped{
+    margin-top: 15px !important;
+}
+.autoresizenone {
+    resize: none;
+}
+.btn_inline {
+    display: inline-block;
+    font-size: 12px;
+    padding: 6px 10px;
+}
+.bg-lightgreen{
+    background: #c9ffcb !important;
+}
+.bg-lightorange{
+    background: #fed8b1 !important;
+}
+
+.table-responsive { border:0 none; }
+
+li.select2-selection__choice{
+    color: white !important;
+    background: #62549a!important;
+}
+
+span.select2-selection__choice__remove{
+    color: white !important;
+}
+.m-0{
+    margin: 0px !important;
+}
+/*select{
+    font-family: '"Open Sans", sans-serif'
+}
+select > option {
+    font-family: inherit;
+}*/
+.preview_tab .form-group { border-bottom: 1px solid #ededed; padding: 0; min-height: 67px; }
+.preview_tab .form-group label { font-size: 13px; font-weight: 600; }
+.preview_tab .form-group p { font-size: 13px; margin: 0; }
+.colvis-responsive-data-table th,.responsive-data-table th{
+    white-space: nowrap;
+    padding: 10px 19px 10px 10px !important;
+}
+.colvis-responsive-data-table tr > td,.responsive-data-table tr > td{
+    white-space: nowrap;
+}
+/*------------------------------------------------------- Responsive Devices --------------------------------------------------------------*/
+
+@media screen and (max-width: 786px) {
+    .dataTables_length label { display: block; font-size: 14px; font-weight: 500; text-transform: capitalize; }
+    .dataTables_length select { display: inline-block; width: 130px; margin:0 10px;  }
+    .dataTables_filter label { display: block; font-size: 14px; font-weight: 500; text-transform: capitalize;  }
+    .dataTables_wrapper .dataTables_filter input { margin: 0 10px; width: 174px; display: inline-block; }
+    .btn_inline_mobile { padding: 4px 8px; font-size: 14px; }
+
+    .tbl-head { float: right; margin: 0 0 10px 0; width: 100%; }
+    .tbl-head .ColVis { margin-bottom: 0px; width: 100%; float: left; }
+    .tbl-head .ColVis_Button.ColVis_MasterButton { width: 100%; }
+    ul.ColVis_collection { width: 248px; }
+
+    .tbl-pagin { float: left; width: 100%; }
+    .tbl-pagin .pagination { margin:0 0 10px 0;  }
+}
