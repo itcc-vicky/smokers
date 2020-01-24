@@ -159,30 +159,44 @@
     <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
         <thead>
             <tr>
-                <th>Record ID</th>
-                <th>Order ID</th>
-                <th>Country</th>
-                <th>Ship City</th>
-                <th>Company Agent</th>
-                <th>Ship Date</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Actions</th>
+                <th> Actions </th>
+                <th> Agency Name </th>
+                <th> Property Manager Name </th>
+                <th> Landlord </th>
+                <th> Landlord Contact</th>
+                <th> Landlord Email </th>
+                <th> No. </th>
+                <th> Street </th>
+                <th> Suburb </th>
+                <th> State </th>
+                <th> Postal Code </th>
+                <th> Key </th>
+                <th> Country </th>
+                <th> Area Location </th>
+                <th> Service Month </th>
+                <th> Tenant </th>
+                <th> Contact Details </th>
+                <th> Status </th>
+                <th> Location 1 </th>
+                <th> Type 1 </th>
+                <th> Exp Date 1 </th>
+                <th> Location 2 </th>
+                <th> Type 2 </th>
+                <th> Exp Date 2 </th>
+                <th> Location 3 </th>
+                <th> Type 3 </th>
+                <th> Exp Date 3 </th>
+                <th> Location 4 </th>
+                <th> Type 4 </th>
+                <th> Exp Date 4 </th>
+                <th> Comments </th>
+                <th> Service Plan </th>
+                <th> Services </th>
+                <th> Last Alarm Service Date </th>
+                <th> Last Heater Service Date </th>
+                <th> Last Solar Cleaning Service Date </th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Record ID</th>
-                <th>Order ID</th>
-                <th>Country</th>
-                <th>Ship City</th>
-                <th>Company Agent</th>
-                <th>Ship Date</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </tfoot>
     </table>
 
 @endsection
@@ -221,7 +235,10 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             dom: `<'row'<'col-sm-12'tr>>
             <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
-
+            buttons: [ 'colvis' ],
+            language: {
+                'lengthMenu': 'Display _MENU_',
+            },
             lengthMenu: [5, 10, 25, 50],
 
             pageLength: 1,
@@ -230,115 +247,111 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             processing: false,
             serverSide: true,
             ajax: {
-                url: '{{ route('job') }}',
-                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '{{ route('postJob') }}',
+                type: 'POST',
                 dataSrc: 'jobs',
             },
             columns: [
                 {data: 'id'},
-                {data: 'OrderID'},
-                {data: 'Country'},
-                {data: 'ShipCity'},
-                {data: 'CompanyAgent'},
-                {data: 'ShipDate'},
-                {data: 'Status'},
-                {data: 'Type'},
-                {data: 'Actions', responsivePriority: -1},
+                {data: 'agency.name'},
+                {data: 'property_manager_name'},
+                {data: 'landlord'},
+                {data: 'landlord_contact'},
+                {data: 'landlord_email'},
+                {data: 'address_line_1'},
+                {data: 'address_line_2'},
+                {data: 'city'},
+                {data: 'state'},
+                {data: 'postal_code'},
+                {data: 'key'},
+                {data: 'country'},
+                {data: 'location_area'},
+                {data: 'service_month'},
+                {data: 'tenant'},
+                {data: 'contact_details'},
+                {data: 'status'},
+                {data: 'loc_custom_field_1'},
+                {data: 't_custom_field_1'},
+                {data: 'exp_custom_field_1'},
+                {data: 'loc_custom_field_2'},
+                {data: 't_custom_field_2'},
+                {data: 'exp_custom_field_2'},
+                {data: 'loc_custom_field_3'},
+                {data: 't_custom_field_3'},
+                {data: 'exp_custom_field_3'},
+                {data: 'loc_custom_field_4'},
+                {data: 't_custom_field_4'},
+                {data: 'exp_custom_field_4'},
+                {data: 'comments'},
+                {data: 'service_plan'},
+                {data: 'services'},
+                {data: 'last_alarm_service'},
+                {data: 'last_heater_service'},
+                {data: 'last_solar_cleaning_service'},
             ],
-
-            initComplete: function() {
-                this.api().columns().every(function() {
-                    var column = this;
-
-                    switch (column.title()) {
-                        case 'Country':
-                            column.data().unique().sort().each(function(d, j) {
-                                $('.kt-input[data-col-index="2"]').append('<option value="' + d + '">' + d + '</option>');
-                            });
-                            break;
-
-                        case 'Status':
-                            var status = {
-                                1: {'title': 'Pending', 'class': 'kt-badge--brand'},
-                                2: {'title': 'Delivered', 'class': ' kt-badge--danger'},
-                                3: {'title': 'Canceled', 'class': ' kt-badge--primary'},
-                                4: {'title': 'Success', 'class': ' kt-badge--success'},
-                                5: {'title': 'Info', 'class': ' kt-badge--info'},
-                                6: {'title': 'Danger', 'class': ' kt-badge--danger'},
-                                7: {'title': 'Warning', 'class': ' kt-badge--warning'},
-                            };
-                            column.data().unique().sort().each(function(d, j) {
-                                $('.kt-input[data-col-index="6"]').append('<option value="' + d + '">' + status[d].title + '</option>');
-                            });
-                            break;
-
-                        case 'Type':
-                            var status = {
-                                1: {'title': 'Online', 'state': 'danger'},
-                                2: {'title': 'Retail', 'state': 'primary'},
-                                3: {'title': 'Direct', 'state': 'success'},
-                            };
-                            column.data().unique().sort().each(function(d, j) {
-                                $('.kt-input[data-col-index="7"]').append('<option value="' + d + '">' + status[d].title + '</option>');
-                            });
-                            break;
-                    }
-                });
-            },
 
             columnDefs: [
                 {
-                    targets: -1,
+                    targets: window._table_targets,
+                    visible: false,
+                },
+                {
+                    targets: 0,
                     title: 'Actions',
                     orderable: false,
                     render: function(data, type, full, meta) {
-                        return `
-                        <span class="dropdown">
-                            <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>
-                                <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>
-                                <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>
-                            </div>
-                        </span>
-                        <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="View">
-                          <i class="la la-edit"></i>
-                        </a>`;
+                        return `<a href="job/edit/`+data+`" class="btn btn-primary btn_inline">View</a>`;
                     },
                 },
                 {
-                    targets: 6,
+                    targets: 17,
                     render: function(data, type, full, meta) {
+                        console.log(meta);
                         var status = {
-                            1: {'title': 'Pending', 'class': 'kt-badge--brand'},
-                            2: {'title': 'Delivered', 'class': ' kt-badge--danger'},
-                            3: {'title': 'Canceled', 'class': ' kt-badge--primary'},
-                            4: {'title': 'Success', 'class': ' kt-badge--success'},
-                            5: {'title': 'Info', 'class': ' kt-badge--info'},
-                            6: {'title': 'Danger', 'class': ' kt-badge--danger'},
-                            7: {'title': 'Warning', 'class': ' kt-badge--warning'},
+                            'Compliant' : {'title': 'Compliant', 'class': 'bg-lightgreen'},
+                            'Quoted' : {'title': 'Quoted', 'class': ' bg-lightorange'},
+                            'Booked In' : {'title': 'Booked In', 'class': ' bg-lightblue'},
+                            'Overdue' : {'title': 'Overdue', 'class': ' bg-lightred'},
+                            'On Hold' : {'title': 'On Hold', 'class': ' bg-lightpurple'}
                         };
                         if (typeof status[data] === 'undefined') {
                             return data;
                         }
-                        return '<span class="kt-badge ' + status[data].class + ' kt-badge--inline kt-badge--pill">' + status[data].title + '</span>';
+                        if (data == 'Booked In') {
+                            return '<span class="badge ' + status[data].class + '">' + status[data].title + '</span><br><span class="badge ' + status[data].class + '">' + full.booked_date + '</span>';
+                        }else{
+                            return '<span class="badge ' + status[data].class + '">' + status[data].title + '</span>';
+                        }
                     },
                 },
                 {
-                    targets: 7,
+                    targets: 14,
                     render: function(data, type, full, meta) {
+                        console.log(meta);
                         var status = {
-                            1: {'title': 'Online', 'state': 'danger'},
-                            2: {'title': 'Retail', 'state': 'primary'},
-                            3: {'title': 'Direct', 'state': 'success'},
+                            'NA' : {'title': 'NA', 'class': 'bg-danger'},
+                            'January' : {'title': 'January', 'class': ''},
+                            'February' : {'title': 'February', 'class': ''},
+                            'March' : {'title': 'March', 'class': ''},
+                            'April' : {'title': 'April', 'class': ''},
+                            'May' : {'title': 'May', 'class': ''},
+                            'June' : {'title': 'June', 'class': ''},
+                            'July' : {'title': 'July', 'class': ''},
+                            'August' : {'title': 'August', 'class': ''},
+                            'September' : {'title': 'September', 'class': ''},
+                            'October' : {'title': 'October', 'class': ''},
+                            'November' : {'title': 'November', 'class': ''},
+                            'December' : {'title': 'December', 'class': ''},
                         };
                         if (typeof status[data] === 'undefined') {
                             return data;
                         }
-                        return '<span class="kt-badge kt-badge--' + status[data].state + ' kt-badge--dot"></span>&nbsp;' +
-                            '<span class="kt-font-bold kt-font-' + status[data].state + '">' + status[data].title + '</span>';
+
+                        return '<span class="label ' + status[data].class + '">' + status[data].title + '</span>';
+
                     },
                 },
             ],

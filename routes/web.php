@@ -23,6 +23,7 @@ Route::delete('agency/delete', 'AgencyController@postDelete')->name('agencyPostD
 
 
 Route::get('job', 'JobController@index')->name('job');
+Route::post('job', 'JobController@postIndex')->name('postJob');
 Route::get('job/pending', 'JobController@getPending')->name('jobPending');
 Route::get('job/deleted', 'JobController@getDeleted')->name('jobDeleted');
 Route::get('job/add', 'JobController@add')->name('jobAdd');
