@@ -228,12 +228,12 @@
                                         {{ $job->contact_details }}
                                         @endif
                                     </td>
-                                    <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }}">
-                                        @if($job->originalJob->status != $job->status)
-                                        <p class="text-danger m-0"><del>{{$job->originalJob->status}}<del></p>
-                                        <p class="text-success m-0">{{$job->status}}</p>
+                                    <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">
+                                        @if($job->originalJob->status != $job->status || $job->originalJob->booked_date != $job->booked_date)
+                                        <p class="text-danger m-0"><del>{{$job->originalJob->status}} @if($job->status == 'Booked In')<br>{{ $job->originalJob->booked_date != null ? \Carbon\Carbon::parse($job->originalJob->booked_date)->format('d M Y') : '' }} @endif<del></p>
+                                        <p class="text-success m-0">{{$job->status}} @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif</p>
                                         @else
-                                        {{ $job->status }}
+                                        {{ $job->status }} @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif
                                         @endif
                                     </td>
                                     <td>

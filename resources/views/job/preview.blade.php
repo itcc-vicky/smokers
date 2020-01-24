@@ -234,11 +234,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="status">Status</label>
-                                            @if($job->status != $clonedJob->status)
-                                                <p class="text-danger m-0"><b><del>{{$job->status}}</del></b></p>
-                                                <p class="text-success m-0"><b>{{$clonedJob->status}}</b></p>
+                                            @if($job->status != $clonedJob->status || $job->booked_date != $clonedJob->booked_date)
+                                                <p class="text-danger m-0"><b><del>{{$job->status}} @if($job->status == 'Booked In') - {{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif</del></b></p>
+                                                <p class="text-success m-0"><b>{{$clonedJob->status}} @if($clonedJob->status == 'Booked In') - {{ $clonedJob->booked_date != null ? \Carbon\Carbon::parse($clonedJob->booked_date)->format('d M Y') : '' }} @endif</b></p>
                                             @else
-                                                <p>{{$job->status}}</p>
+                                                <p>{{$job->status}} @if($job->status == 'Booked In') - {{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif</p>
                                             @endif
                                         </div>
                                     </div>

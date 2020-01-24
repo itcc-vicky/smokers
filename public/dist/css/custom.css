@@ -26,7 +26,17 @@ div.ColVis{
 .bg-lightorange{
     background: #fed8b1 !important;
 }
-
+.bg-lightblue{
+    background: #add8e6 !important;
+}
+.bg-lightred{
+    background: #ff6c60 !important;
+    color: white;
+}
+.bg-lightpurple{
+    background: #62549a !important;
+    color: white;
+}
 .table-responsive { border:0 none; }
 
 li.select2-selection__choice{

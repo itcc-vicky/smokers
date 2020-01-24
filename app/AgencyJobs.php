@@ -17,5 +17,8 @@ class AgencyJobs extends Model
     public function clonedJob(){
         return $this->hasOne('App\AgencyJobChanges','job_id','id');
     }
-
+    public function invoices()
+    {
+        return $this->hasMany('App\Invoice','job_id','id');
+    }
 }

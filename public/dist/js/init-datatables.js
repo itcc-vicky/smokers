@@ -55,13 +55,17 @@ $('.colvis-data-table').DataTable({
 var job = $('.colvis-responsive-data-table').DataTable({
     "PaginationType": "bootstrap",
     // responsive: true,
+                // dom: `<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>><'row'<'col-sm-12'tr>>`,
     dom: '<"tbl-head clearfix"C>,<"tbl-top clearfix"lfr>,t,<"tbl-footer clearfix"<"tbl-info pull-left"i><"tbl-pagin pull-right"p>>',
     orderCellsTop: true,
-    "columnDefs": [{
-    "targets": window._table_targets,
-    "visible": false,
+    pageLength: 50,
+    buttons: [
+       'print'
+    ],
+    columnDefs: [{
+    targets: window._table_targets,
+    visible: false,
     }],
-
 });
 
 // $('.responsive-data-table thead tr').clone(true).appendTo( '.responsive-data-table thead' );
@@ -85,7 +89,8 @@ var job = $('.colvis-responsive-data-table').DataTable({
 // } );
 
 var agency  = $('.responsive-data-table').DataTable({
-    "PaginationType": "bootstrap",
-     orderCellsTop: true,
+    PaginationType: "bootstrap",
+    orderCellsTop: true,
+    pageLength: 50,
     dom: '<"tbl-top clearfix"lfr>,t,<"tbl-footer clearfix"<"tbl-info pull-left"i><"tbl-pagin pull-right"p>>'
 });

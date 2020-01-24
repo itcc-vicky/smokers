@@ -157,7 +157,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="{{$job->status == 'Booked In' ? 'col-md-4' : 'col-md-6'}}" id="service_month_div">
                                         <div class="form-group">
                                             <label for="service_month">Service Month</label>
                                             <select class="form-control" id="service_month" name="service_month" placeholder="Service Month" value="{{ $job->service_month }}">
@@ -177,14 +177,23 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="{{$job->status == 'Booked In' ? 'col-md-4' : 'col-md-6'}}" id="status_div">
                                         <div class="form-group">
                                             <label for="status">Status</label>
-                                            <select class="form-control" id="status" name="status" placeholder="Status" value="{{ $job->status }}">
+                                            <select class="form-control" id="status" name="status" placeholder="Status" value="{{ $job->status }}"  onchange="toggleBookedDate(event)">
                                                 <option value="" {{ $job->status == '' ? 'selected' : '' }}>Select Status</option>
                                                 <option value="Compliant" {{ $job->status == 'Compliant' ? 'selected' : '' }}>Compliant</option>
                                                 <option value="Quoted" {{ $job->status == 'Quoted' ? 'selected' : '' }}>Quoted</option>
+                                                <option value="Booked In" {{ $job->status == 'Booked In' ? 'selected' : '' }}>Booked In</option>
+                                                <option value="Overdue" {{ $job->status == 'Overdue' ? 'selected' : '' }}>Overdue</option>
+                                                <option value="On Hold" {{ $job->status == 'On Hold' ? 'selected' : '' }}>On Hold</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 {{$job->status == 'Booked In' ? '' : 'hidden'}}" id="booked_date_div">
+                                        <div class="form-group">
+                                            <label for="booked_date">Booked Date</label>
+                                            <input class="form-control datepicker" id="booked_date" name="booked_date" placeholder="DD-MM-YYYY" type="text" value="{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d-m-Y') : '' }}">
                                         </div>
                                     </div>
                                 </div>
@@ -341,7 +350,61 @@
                                 <button type="submit" id="editJobButton" class="btn btn-primary pull-right m-5">Submit</button>
                                 <a href="{{ route('job') }}" class="btn btn-danger pull-left">Cancel</a>
                                 <button type="button" onclick="openDeleteDialog('#deleteJob{{$job->id}}');"  class="btn btn-danger pull-left ml-5">Delete</button>
+                                <div class="clearfix"></div>
+
+
+
+                                <div id="append_row" style="margin-top: 20px;">
+                                    <div class="row form-group">
+                                        <label class="col-lg-2 col-form-label">Add Invoice:</label>
+                                        <div class="col-lg-10">
+                                            <div class="col-md-4">
+                                                <input class="form-control" placeholder="Enter email" name="invoice_name[]" type="file">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
+                                                    <option value="Alarm" selected>Alarm</option>
+                                                    <option value="Heater">Heater</option>
+                                                    <option value="Solar Cleaning">Solar Cleaning</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-info btn_inline" id="add_new_invoice">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
+                            <div class="clearfix"></div>
+                            <div class="panel panel-primary" style="margin-top: 20px;">
+                                <header class="panel-heading text-left">
+                                    Invoices
+                                </header>
+                                <div class="panel-body">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th width="30%">Date</th>
+                                            <th width="30%">Name</th>
+                                            <th width="30%">Service</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($job->invoices as $key => $invoice)
+                                        <tr>
+                                            <td><a href="#">{{$key+1}}</a></td>
+                                            <td>{{$invoice->created_at}}</td>
+                                            <td class="text-capitalize">{{$invoice->invoice_name}}</td>
+                                            <td class="text-capitalize">{{$invoice->service_name}}</td>
+                                            <td><a href="#" class="btn btn-info btn_inline">View</a></td>
+                                        </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -358,8 +421,38 @@ $(document).ready(function() {
     $(".js-example-basic-select2").select2({
         placeholder: "Select Service"
     });
- });
+    let _count = 1;
+    $('#add_new_invoice').on('click', function(e) {
+        e.preventDefault();
+        $('#append_row').append(`
+                <div class="row form-group" id="myrow_`+_count+`">
+                    <label class="col-lg-2 col-form-label">Add Invoice:</label>
+                    <div class="col-lg-10">
+                        <div class="col-md-4">
+                            <input class="form-control" placeholder="Enter email" name="invoice_name[]" type="file">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
+                                <option value="Alarm" selected>Alarm</option>
+                                <option value="Heater">Heater</option>
+                                <option value="Solar Cleaning">Solar Cleaning</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger btn_inline removeme" row_id="myrow_`+_count+`">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        _count++;
+    });
 
+    $(document).on('click', '.removeme', function(e) {
+        e.preventDefault();
+        const _removeid = $(this).attr('row_id');
+        $('#'+_removeid).remove();
+    });
+ });
 var placeSearch, autocomplete;
 
 var componentForm = {
@@ -468,6 +561,19 @@ function toggleServiceDates(){
         $('#alarm_date').hide();
         $('#heater_date').hide();
         $('#solar_cleaning_date').hide();
+    }
+}
+
+function toggleBookedDate(event){
+    console.log(event.target.value);
+    if(event.target.value == 'Booked In'){
+        $("#booked_date_div").removeClass('hidden');
+        $("#status_div").removeClass('col-md-6').addClass('col-md-4');
+        $("#service_month_div").removeClass('col-md-6').addClass('col-md-4');
+    }else{
+        $("#booked_date_div").addClass('hidden');
+        $("#status_div").addClass('col-md-6').removeClass('col-md-4');
+        $("#service_month_div").addClass('col-md-6').removeClass('col-md-4');
     }
 }
 

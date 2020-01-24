@@ -30,7 +30,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
-                            <form role="form" autocomplete="off" id="addJobForm" method="POST" action="{{ route('jobPostUpdate') }}">
+                            <form role="form" autocomplete="off" id="addJobForm" method="POST" action="{{ route('jobPostUpdate') }}" enctype="multipart/form-data">
                                 @csrf
 
                                 @if(\Auth::user()->role == 'admin')
@@ -208,7 +208,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="service_month_div">
                                         <div class="form-group">
                                             <label for="service_month">Service Month</label>
                                             <select class="form-control" id="service_month" name="service_month" placeholder="Service Month">
@@ -228,14 +228,23 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="status_div">
                                         <div class="form-group">
                                             <label for="status">Status</label>
-                                            <select class="form-control" id="status" name="status" placeholder="Status" value="{{ old('status') }}">
+                                            <select class="form-control" id="status" name="status" placeholder="Status" value="{{ old('status') }}" onchange="toggleBookedDate(event)">
                                                 <option value="" {{ old('status') == '' ? 'selected' : '' }}>Select Status</option>
                                                 <option value="Compliant" {{ old('status') == 'Compliant' ? 'selected' : '' }}>Compliant</option>
                                                 <option value="Quoted" {{ old('status') == 'Quoted' ? 'selected' : '' }}>Quoted</option>
+                                                <option value="Booked In" {{ old('status') == 'Booked In' ? 'selected' : '' }}>Booked In</option>
+                                                <option value="Overdue" {{ old('status') == 'Overdue' ? 'selected' : '' }}>Overdue</option>
+                                                <option value="On Hold" {{ old('status') == 'On Hold' ? 'selected' : '' }}>On Hold</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 hidden" id="booked_date_div">
+                                        <div class="form-group">
+                                            <label for="booked_date">Booked Date</label>
+                                            <input class="form-control datepicker" id="booked_date" name="booked_date" placeholder="DD-MM-YYYY" type="text" value="{{ old('booked_date') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -385,6 +394,27 @@
 
                                 <button type="submit" id="addJobButton" class="btn btn-primary pull-right m-5">Submit</button>
                                 <a href="{{ route('job') }}" class="btn btn-danger pull-left m-5">Cancel</a>
+
+                                <div id="append_row">
+                                    <div class="row form-group">
+                                        <label class="col-lg-2 col-form-label">Add Invoice:</label>
+                                        <div class="col-lg-10">
+                                            <div class="col-md-4">
+                                                <input class="form-control" placeholder="Enter email" name="invoice_name[]" type="file">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
+                                                    <option value="Alarm" selected>Alarm</option>
+                                                    <option value="Heater">Heater</option>
+                                                    <option value="Solar Cleaning">Solar Cleaning</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-info btn_inline" id="add_new_invoice">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -402,6 +432,38 @@
 $(document).ready(function() {
     $(".js-example-basic-select2").select2({
         placeholder: "Select Service"
+    });
+    let _count = 1;
+
+    $('#add_new_invoice').on('click', function(e) {
+        e.preventDefault();
+        $('#append_row').append(`
+                <div class="row form-group" id="myrow_`+_count+`">
+                    <label class="col-lg-2 col-form-label">Add Invoice:</label>
+                    <div class="col-lg-10">
+                        <div class="col-md-4">
+                            <input class="form-control" placeholder="Enter email" name="invoice_name[]" type="file">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
+                                <option value="Alarm" selected>Alarm</option>
+                                <option value="Heater">Heater</option>
+                                <option value="Solar Cleaning">Solar Cleaning</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger btn_inline removeme" row_id="myrow_`+_count+`">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        _count++;
+    });
+
+    $(document).on('click', '.removeme', function(e) {
+        e.preventDefault();
+        const _removeid = $(this).attr('row_id');
+        $('#'+_removeid).remove();
     });
  });
 
@@ -512,7 +574,18 @@ function toggleServiceDates(){
         $('#solar_cleaning_date').hide();
     }
 }
-
+function toggleBookedDate(event){
+    console.log(event.target.value);
+    if(event.target.value == 'Booked In'){
+        $("#booked_date_div").removeClass('hidden');
+        $("#status_div").removeClass('col-md-6').addClass('col-md-4');
+        $("#service_month_div").removeClass('col-md-6').addClass('col-md-4');
+    }else{
+        $("#booked_date_div").addClass('hidden');
+        $("#status_div").addClass('col-md-6').removeClass('col-md-4');
+        $("#service_month_div").addClass('col-md-6').removeClass('col-md-4');
+    }
+}
 $("#addJobButton").click(function(event){
     event.preventDefault();
 

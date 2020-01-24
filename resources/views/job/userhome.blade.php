@@ -123,7 +123,7 @@
                                     <td class="{{ $job->service_month == 'NA' ? 'bg-danger' : '' }}" > {{ $job->service_month }} </td>
                                     <td> {{ $job->tenant }} </td>
                                     <td> {{ $job->contact_details }} </td>
-                                    <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }}"> {{ $job->status }} </td>
+                                    <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}"> {{ $job->status }} @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif </td>
                                     <td> {{ $job->loc_custom_field_1 }} </td>
                                     <td> {{ $job->t_custom_field_1 }} </td>
                                     <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : ''}} </td>
@@ -162,7 +162,7 @@
                                     <td class="{{ $job->service_month == 'NA' ? 'bg-danger' : '' }}" > {{ $job->service_month }} </td>
                                     <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->tenant}}">{{ Illuminate\Support\Str::limit($job->tenant, 15) }} </p></td>
                                     <td> {{ $job->contact_details }} </td>
-                                    <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }}"> {{ $job->status }} </td>
+                                    <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}"> {{ $job->status }} @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif </td>
                                     <td> {{ $job->loc_custom_field_1 }} </td>
                                     <td> {{ $job->t_custom_field_1 }} </td>
                                     <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>

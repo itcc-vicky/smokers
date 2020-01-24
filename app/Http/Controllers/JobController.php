@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\AgencyJobChanges;
 use App\AgencyJobs;
+use App\Invoice;
 use App\User;
 use Auth;
 use Carbon\Carbon;
@@ -30,6 +31,12 @@ class JobController extends Controller
         if(Auth::user()->role == 'admin'){
             $ids = AgencyJobChanges::pluck('job_id');
             $jobs = AgencyJobs::WhereNotIn('id',$ids)->get();
+            if($request->wantsJson()){
+                $data = array();
+                $data['code'] = 200;
+                $data['jobs'] = $jobs;
+                return response()->json($data);
+            }
             return view('job.adminhome')->with('jobs', $jobs);
         }
         if(Auth::user()->role == 'agency'){
@@ -156,6 +163,7 @@ class JobController extends Controller
         $job->tenant = $request->has('tenant') ? $request->get('tenant') : null;
         $job->contact_details = $request->has('contact_details') ? $request->get('contact_details') : null;
         $job->status = $request->has('status') ? $request->get('status') : null;
+        $job->booked_date = $request->has('booked_date') && $request->get('booked_date') != null ? Carbon::parse($request->get('booked_date')) : null;
         $job->t_custom_field_1 = $request->has('t_custom_field_1') ? $request->get('t_custom_field_1') : null;
         $job->loc_custom_field_1 = $request->has('loc_custom_field_1') ? $request->get('loc_custom_field_1') : null;
         $job->exp_custom_field_1 = $request->has('exp_custom_field_1') && $request->get('exp_custom_field_1') != null ? Carbon::parse($request->get('exp_custom_field_1')) : null;
@@ -205,6 +213,7 @@ class JobController extends Controller
                     $clonedJob->tenant = $job->tenant;
                     $clonedJob->contact_details = $job->contact_details;
                     $clonedJob->status = $job->status;
+                    $clonedJob->booked_date = $job->booked_date;
                     $clonedJob->t_custom_field_1 = $job->t_custom_field_1;
                     $clonedJob->loc_custom_field_1 = $job->loc_custom_field_1;
                     $clonedJob->exp_custom_field_1 = $job->exp_custom_field_1;
@@ -264,6 +273,7 @@ class JobController extends Controller
         $job->tenant = $clonedJob->tenant;
         $job->contact_details = $clonedJob->contact_details;
         $job->status = $clonedJob->status;
+        $job->booked_date = $clonedJob->booked_date;
         $job->t_custom_field_1 = $clonedJob->t_custom_field_1;
         $job->loc_custom_field_1 = $clonedJob->loc_custom_field_1;
         $job->exp_custom_field_1 = $clonedJob->exp_custom_field_1;
