@@ -30,7 +30,27 @@ class JobController extends Controller
     public function index(Request $request){
         if(Auth::user()->role == 'admin'){
             $ids = AgencyJobChanges::pluck('job_id');
-            $jobs = AgencyJobs::WhereNotIn('id',$ids)->get();
+            $jobs = AgencyJobs::WhereNotIn('id',$ids)->with('agency')->get();
+            if($request->wantsJson()){
+                $data = array();
+                $data['code'] = 200;
+                $data['jobs'] = $jobs;
+                return response()->json($data);
+            }
+            return view('job.adminhome')->with('jobs', $jobs);
+        }
+        if(Auth::user()->role == 'agency'){
+            $ids = AgencyJobChanges::where('agency_id',Auth::Id())->pluck('job_id');
+            $jobs = AgencyJobs::where('agency_id',Auth::Id())->WhereNotIn('id',$ids)->get();
+            $clonedJobs = AgencyJobChanges::where('agency_id',Auth::Id())->get();
+            return view('job.userhome')->with('jobs', $jobs)->with('clonedJobs', $clonedJobs);
+        }
+    }
+
+    public function postIndex(Request $request){
+        if(Auth::user()->role == 'admin'){
+            $ids = AgencyJobChanges::pluck('job_id');
+            $jobs = AgencyJobs::WhereNotIn('id',$ids)->with('agency')->get();
             if($request->wantsJson()){
                 $data = array();
                 $data['code'] = 200;
