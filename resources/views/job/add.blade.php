@@ -395,7 +395,7 @@
                                 <button type="submit" id="addJobButton" class="btn btn-primary pull-right m-5">Submit</button>
                                 <a href="{{ route('job') }}" class="btn btn-danger pull-left m-5">Cancel</a>
 
-                                <div id="append_row">
+                                <div class="mt-60" id="append_row">
                                     <div class="row form-group">
                                         <label class="col-lg-2 col-form-label">Add Invoice:</label>
                                         <div class="col-lg-10">

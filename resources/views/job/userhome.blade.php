@@ -68,7 +68,7 @@
                         <table class="table colvis-responsive-data-table table-striped">
                             <thead>
                                 <tr>
-                                    <th> Actions </th>
+                                    <th> <input type="checkbox" name="checkall" id="checkall"> Actions </th>
                                     <th> Property Manager Name </th>
                                     <th> Landlord </th>
                                     <th> Landlord Contact</th>
@@ -106,6 +106,7 @@
                                 @foreach($clonedJobs as $job)
                                 <tr>
                                     <td>
+                                        <input type="checkbox" name="check_job[]" value="{{ $job->job_id }}">
                                         <a href="{{ route('jobEdit', ['id' => $job->job_id]) }}" class="btn btn-primary btn_inline">View</a>
                                     </td>
                                     <td> {{ $job->property_manager_name }} </td>
@@ -145,6 +146,7 @@
                                 @foreach($jobs as $job)
                                 <tr>
                                     <td>
+                                        <input type="checkbox" name="check_job[]" value="{{ $job->id }}">
                                         <a href="{{ route('jobEdit', ['id' => $job->id]) }}" class="btn btn-primary btn_inline">View</a>
                                     </td>
                                     <td> {{ $job->property_manager_name }} </td>
@@ -182,6 +184,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <button class="btn btn-success" id="update_status">Update Status</button>
                 </div>
             </section>
         </div>
@@ -195,6 +198,36 @@
 <script>
     window._table_targets = [ 1,2,3,4,9,11,12,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30 ];
     // window._table_targets = [ 2,3,4,5,10,12,13,16,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 ];
+    $(document).ready(function() {
+        $("#checkall").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+        $(document).on('click', '#update_status', function(e) {
+            e.preventDefault();
+            var checkedNum = $('input[name="check_job[]"]:checked').length;
+            if (!checkedNum) {
+                // User didn't check any checkboxes
+                toastr["error"]('Please select atleast one checkbox');
+            } else {
+                var job_ids = [];
+                $.each($("input[name='check_job[]']:checked"), function(){
+                    job_ids.push($(this).val());
+                });
+                $.ajax({
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    url: '{{ route('changeJobBulkStatus') }}',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        job_ids: job_ids
+                    },
+                    success: function(res) {
+                        console.log(res);
+                    }
+                }); // end ajax
+            }
+        });
+    });
 </script>
 
 <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>

@@ -39,7 +39,7 @@
                                 @method('DELETE')
                                 @csrf
                             </form>
-                            <form autocomplete="off" role="form" id="editJobForm" method="POST" action="{{ route('jobPostUpdate') }}">
+                            <form autocomplete="off" role="form" id="editJobForm" method="POST" action="{{ route('jobPostUpdate') }}" enctype="multipart/form-data">
                                 @csrf
                                 @if(isset($job->job_id))
                                     <input type="hidden" name="id" value="{{ $job->job_id }}">
@@ -359,7 +359,8 @@
                                         <label class="col-lg-2 col-form-label">Add Invoice:</label>
                                         <div class="col-lg-10">
                                             <div class="col-md-4">
-                                                <input class="form-control" placeholder="Enter email" name="invoice_name[]" type="file">
+                                                <input class="form-control" accept="application/pdf,application/msword,
+  application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*" placeholder="Enter email" name="invoice_name[]" type="file">
                                             </div>
                                             <div class="col-md-4">
                                                 <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
@@ -392,15 +393,27 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($job->invoices as $key => $invoice)
+                                        @if(isset($job->job_id))
+                                        @foreach($job->originalJob->invoices as $key => $invoice)
                                         <tr>
-                                            <td><a href="#">{{$key+1}}</a></td>
-                                            <td>{{$invoice->created_at}}</td>
+                                            <td><a href="javascript:void(0)">{{$key+1}}</a></td>
+                                            <td>{{ date('d-M-Y h:i A', strtotime($invoice->created_at)) }}</td>
                                             <td class="text-capitalize">{{$invoice->invoice_name}}</td>
                                             <td class="text-capitalize">{{$invoice->service_name}}</td>
-                                            <td><a href="#" class="btn btn-info btn_inline">View</a></td>
+                                            <td><a target="_blank" href="{{ asset('invoices') }}/{{ $invoice->invoice_name }}" class="btn btn-info btn_inline">View</a></td>
                                         </tr>
                                         @endforeach
+                                        @else
+                                        @foreach($job->invoices as $key => $invoice)
+                                        <tr>
+                                            <td><a href="javascript:void(0)">{{$key+1}}</a></td>
+                                            <td>{{ date('d-M-Y h:i A', strtotime($invoice->created_at)) }}</td>
+                                            <td class="text-capitalize">{{$invoice->invoice_name}}</td>
+                                            <td class="text-capitalize">{{$invoice->service_name}}</td>
+                                            <td><a target="_blank" href="{{ asset('invoices') }}/{{ $invoice->invoice_name }}" class="btn btn-info btn_inline">View</a></td>
+                                        </tr>
+                                        @endforeach
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>

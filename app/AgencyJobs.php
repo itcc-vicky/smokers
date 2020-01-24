@@ -19,6 +19,6 @@ class AgencyJobs extends Model
     }
     public function invoices()
     {
-        return $this->hasMany('App\Invoice','job_id','id');
+        return $this->hasMany('App\Invoice','job_id','id')->latest();
     }
 }

@@ -184,8 +184,6 @@ class JobController extends Controller
         $job->last_heater_service = $request->has('last_heater_service') && $request->has('last_heater_service') != null ? Carbon::parse($request->get('last_heater_service')) : $job->last_heater_service;
         $job->last_solar_cleaning_service = $request->has('last_solar_cleaning_service') && $request->has('last_solar_cleaning_service') != null ? Carbon::parse($request->get('last_solar_cleaning_service')) : $job->last_solar_cleaning_service;
 
-
-
         if(Auth::user()->role == 'agency'){
 
             if($request->has('id')){
@@ -247,6 +245,19 @@ class JobController extends Controller
                 request()->session()->flash('notify-success', 'Job Updated Successfully..!');
             }else{
                 request()->session()->flash('notify-success', 'Job Added Successfully..!');
+            }
+        }
+
+        if( $request->file('invoice_name') ) {
+            foreach ($request->file('invoice_name') as $key => $_file) {
+                // $filename = "INV".time().$_file->getClientOriginalName();
+                $filename = "INV".time()."_".rand(1000, 9999).'.'.$_file->getClientOriginalExtension();
+                $_file->move(base_path().'/public/invoices', $filename);
+                $inv = new Invoice;
+                $inv->job_id = $job->id;
+                $inv->invoice_name = $filename;
+                $inv->service_name = $request->get('service_name')[$key];
+                $inv->save();
             }
         }
 

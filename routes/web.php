@@ -33,6 +33,7 @@ Route::get('job/approve/{id}', 'JobController@postApprove')->name('jobPostApprov
 Route::get('job/decline/{id}', 'JobController@postDecline')->name('jobPostDecline');
 Route::get('job/restore/{id}', 'JobController@postRestore')->name('jobPostRestore');
 Route::delete('job/delete', 'JobController@postDelete')->name('jobPostDelete');
+Route::post('job/changejobbulkstatus', 'JobController@changeJobBulkStatus')->name('changeJobBulkStatus');
 
 Route::get('profile/edit', 'ProfileController@edit')->name('profileEdit');
 Route::post('profile/update', 'ProfileController@postUpdate')->name('profilePostUpdate');
