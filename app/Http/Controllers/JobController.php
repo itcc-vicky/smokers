@@ -373,5 +373,26 @@ class JobController extends Controller
 
         return redirect('job');
     }
+
+    public function changejobbulkstatus(Request $request) {
+        if( $request->has('job_ids') ) {
+            foreach ($request->get('job_ids') as $key => $value) {
+                if(Auth::user()->role == 'agency'){
+                    // first check in 'agency_job_changes' table
+                    // if not found then clone from 'agency_jobs' to 'agency_job_changes'
+                } else {
+                    // change directly in 'agency_jobs' table
+                    $job = AgencyJobs::find($value);
+                    $job->status = NULL;
+                    $job->save();
+                }
+            }
+        }
+        request()->session()->flash('notify-success', 'Job Status Updated Successfully..!');
+        $response['code'] = 200;
+        $response['title'] = 'Job Status Updated Successfully..!';
+        $response['message'] = '';
+        return response()->json($response);
+    }
 }
 
