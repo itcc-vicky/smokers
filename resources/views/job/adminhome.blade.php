@@ -57,105 +57,53 @@
             <section class="panel">
                 <header class="panel-heading panel-border"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                     &nbsp;
+                    <button class="btn btn-primary btn-brand--icon kt_search" value="Compliant">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Compliant</span>
+                        </span>
+                    </button>
+                    <button class="btn btn-primary btn-brand--icon kt_search" value="Quoted">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Quoted</span>
+                        </span>
+                    </button>
+                    <button class="btn btn-primary btn-brand--icon kt_search" value="Booked In">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Booked In</span>
+                        </span>
+                    </button>
+                    <button class="btn btn-primary btn-brand--icon kt_search" value="Overdue">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Overdue</span>
+                        </span>
+                    </button>
+                    <button class="btn btn-primary btn-brand--icon kt_search" value="On Hold">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>On Hold</span>
+                        </span>
+                    </button>
+                    <button class="btn btn-primary btn-brand--icon" id="kt_reset">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Reset</span>
+                        </span>
+                    </button>
                     <span class="new_button pull-right">
                         @if(request()->route()->getName() == 'job')
                         <a href="{{ route('jobAdd') }}" class="btn btn-info "><i class="fa fa-plus"></i> Add New Job</a>
                         @endif
                     </span>
                 </header>
-                <div class="panel-body">
-                    <div class="table table-responsive">
-                        <table class="table colvis-responsive-data-table table-striped">
-                            <thead>
-                                <tr>
-                                    <th> Actions </th>
-                                    <th> Agency Name </th>
-                                    <th> Property Manager Name </th>
-                                    <th> Landlord </th>
-                                    <th> Landlord Contact</th>
-                                    <th> Landlord Email </th>
-                                    <th> No. </th>
-                                    <th> Street </th>
-                                    <th> Suburb </th>
-                                    <th> State </th>
-                                    <th> Postal Code </th>
-                                    <th> Key </th>
-                                    <th> Country </th>
-                                    <th> Area Location </th>
-                                    <th> Service Month </th>
-                                    <th> Tenant </th>
-                                    <th> Contact Details </th>
-                                    <th> Status </th>
-                                    <th> Location 1 </th>
-                                    <th> Type 1 </th>
-                                    <th> Exp Date 1 </th>
-                                    <th> Location 2 </th>
-                                    <th> Type 2 </th>
-                                    <th> Exp Date 2 </th>
-                                    <th> Location 3 </th>
-                                    <th> Type 3 </th>
-                                    <th> Exp Date 3 </th>
-                                    <th> Location 4 </th>
-                                    <th> Type 4 </th>
-                                    <th> Exp Date 4 </th>
-                                    <th> Comments </th>
-                                    <th> Service Plan </th>
-                                    <th> Services </th>
-                                    <th> Last Alarm Service Date </th>
-                                    <th> Last Heater Service Date </th>
-                                    <th> Last Solar Cleaning Service Date </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($jobs as $job)
-                                <tr>
-                                    <td>
-                                        <a href="{{ route('jobEdit', ['id' => $job->id]) }}" class="btn btn-primary btn_inline">View</a>
-                                    </td>
-                                    <td> {{ $job->agency->name }} </td>
-                                    <td> {{ $job->property_manager_name }} </td>
-                                    <td> {{ $job->landlord }} </td>
-                                    <td> {{ $job->landlord_contact }} </td>
-                                    <td> {{ $job->landlord_email }} </td>
-                                    <td> {{ $job->address_line_1 }} </td>
-                                    <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->address_line_2}}">{{ Illuminate\Support\Str::limit($job->address_line_2, 20) }}</p> </td>
-                                    <td> {{ $job->city }} </td>
-                                    <td> {{ $job->state }} </td>
-                                    <td> {{ $job->postal_code }} </td>
-                                    <td> {{ $job->key }} </td>
-                                    <td> {{ $job->country }} </td>
-                                    <td> {{ $job->location_area }} </td>
-                                    <td class="{{ $job->service_month == 'NA' ? 'bg-danger' : '' }}" > {{ $job->service_month }} </td>
-                                    <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->tenant}}">{{ Illuminate\Support\Str::limit($job->tenant, 15) }} </p></td>
-                                    <td> {{ $job->contact_details }} </td>
-                                    <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}"> {{ $job->status }} @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif </td>
-                                    <td> {{ $job->loc_custom_field_1 }} </td>
-                                    <td> {{ $job->t_custom_field_1 }} </td>
-                                    <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>
-                                    <td> {{ $job->loc_custom_field_2 }} </td>
-                                    <td> {{ $job->t_custom_field_2 }} </td>
-                                    <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : '' }} </td>
-                                    <td> {{ $job->loc_custom_field_3 }} </td>
-                                    <td> {{ $job->t_custom_field_3 }} </td>
-                                    <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : '' }} </td>
-                                    <td> {{ $job->loc_custom_field_4 }} </td>
-                                    <td> {{ $job->t_custom_field_4 }} </td>
-                                    <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : '' }} </td>
-                                    <td> {{ $job->comments }} </td>
-                                    <td> {{ $job->service_plan }} </td>
-                                    <td> {{ str_replace(',', ', ', $job->services) }} </td>
-                                    <td> {{ $job->last_alarm_service != null ? \Carbon\Carbon::parse($job->last_alarm_service)->format('d-m-Y') : '' }} </td>
-                                    <td> {{ $job->last_heater_service != null ? \Carbon\Carbon::parse($job->last_heater_service)->format('d-m-Y') : '' }} </td>
-                                    <td> {{ $job->last_solar_cleaning_service != null ? \Carbon\Carbon::parse($job->last_solar_cleaning_service)->format('d-m-Y') : '' }} </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
             </section>
         </div>
     </div>
+
     <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
         <thead>
             <tr>
@@ -198,6 +146,7 @@
             </tr>
         </thead>
     </table>
+    <button class="btn btn-success" id="update_status">Reset Status</button>
 
 @endsection
 
@@ -218,7 +167,6 @@
 <script src="{{ asset('bower_components/datatables-scroller/js/dataTables.scroller.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-<script src="{{ asset('dist/js/init-datatables.js') }}"></script>
 <script>
 
 var KTDatatablesSearchOptionsAdvancedSearch = function() {
@@ -232,20 +180,23 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
         var table = $('#kt_table_1').DataTable({
             responsive: true,
             // Pagination settings
-            dom: `<'row'<'col-sm-12'tr>>
-            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'TCf>>
+            <'row'<'col-sm-12't>>
+            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
-            buttons: [ 'colvis' ],
+            buttons: [ 'print' ],
             language: {
                 'lengthMenu': 'Display _MENU_',
             },
             lengthMenu: [5, 10, 25, 50],
 
-            pageLength: 1,
-
-            searchDelay: 500,
+            pageLength: 50,
+            bServerSide:true,
+            searchDelay: 1000,
             processing: false,
+            aaSorting: [],
             serverSide: true,
+            cache:false,
             ajax: {
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -302,14 +253,15 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     targets: 0,
                     title: 'Actions',
                     orderable: false,
+                    sortable: false,
+                    selector: false,
                     render: function(data, type, full, meta) {
-                        return `<a href="job/edit/`+data+`" class="btn btn-primary btn_inline">View</a>`;
+                        return `<label class="i-checks"><input type="checkbox" name="check_job[]" value="`+data+`"><i></i></label><a href="job/edit/`+data+`" class="btn btn-primary btn_inline">View</a>`;
                     },
                 },
                 {
                     targets: 17,
                     render: function(data, type, full, meta) {
-                        console.log(meta);
                         var status = {
                             'Compliant' : {'title': 'Compliant', 'class': 'bg-lightgreen'},
                             'Quoted' : {'title': 'Quoted', 'class': ' bg-lightorange'},
@@ -330,7 +282,6 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 {
                     targets: 14,
                     render: function(data, type, full, meta) {
-                        console.log(meta);
                         var status = {
                             'NA' : {'title': 'NA', 'class': 'bg-danger'},
                             'January' : {'title': 'January', 'class': ''},
@@ -367,31 +318,17 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             table.column(index).search(val ? val : '', false, true);
         };
 
-        $('#kt_search').on('click', function(e) {
+        $('.kt_search').on('click', function(e) {
             e.preventDefault();
-            var params = {};
-            $('.kt-input').each(function() {
-                var i = $(this).data('col-index');
-                if (params[i]) {
-                    params[i] += '|' + $(this).val();
-                }
-                else {
-                    params[i] = $(this).val();
-                }
-            });
-            $.each(params, function(i, val) {
-                // apply search params to datatable
-                table.column(i).search(val ? val : '', false, false);
-            });
+            let status = $(this).attr('value');
+            table.column(17).search(status, false, false);
             table.table().draw();
+
         });
 
         $('#kt_reset').on('click', function(e) {
             e.preventDefault();
-            $('.kt-input').each(function() {
-                $(this).val('');
-                table.column($(this).data('col-index')).search('', false, false);
-            });
+            table.column(17).search('', false, false);
             table.table().draw();
         });
 
@@ -411,5 +348,38 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
 jQuery(document).ready(function() {
     KTDatatablesSearchOptionsAdvancedSearch.init();
 });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#checkall").click(function () {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+        $(document).on('click', '#update_status', function(e) {
+            e.preventDefault();
+            var checkedNum = $('input[name="check_job[]"]:checked').length;
+            if (!checkedNum) {
+                // User didn't check any checkboxes
+                toastr["error"]('Please select atleast one checkbox');
+            } else {
+                var job_ids = [];
+                $.each($("input[name='check_job[]']:checked"), function(){
+                    job_ids.push($(this).val());
+                });
+                $.ajax({
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    url: '{{ route('changeJobBulkStatus') }}',
+                    type: "POST",
+                    dataType: "JSON",
+                    data: {
+                        job_ids: job_ids
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        location.reload();
+                    }
+                }); // end ajax
+            }
+        });
+    });
 </script>
 @endpush

@@ -29,15 +29,7 @@ class JobController extends Controller
 
     public function index(Request $request){
         if(Auth::user()->role == 'admin'){
-            $ids = AgencyJobChanges::pluck('job_id');
-            $jobs = AgencyJobs::WhereNotIn('id',$ids)->with('agency')->get();
-            if($request->wantsJson()){
-                $data = array();
-                $data['code'] = 200;
-                $data['jobs'] = $jobs;
-                return response()->json($data);
-            }
-            return view('job.adminhome')->with('jobs', $jobs);
+            return view('job.adminhome');
         }
         if(Auth::user()->role == 'agency'){
             $ids = AgencyJobChanges::where('agency_id',Auth::Id())->pluck('job_id');
@@ -46,18 +38,109 @@ class JobController extends Controller
             return view('job.userhome')->with('jobs', $jobs)->with('clonedJobs', $clonedJobs);
         }
     }
-
     public function postIndex(Request $request){
+        $columns = $request->get('columns');
+        $start = $request->get('start', 0);
+        $length = $request->get('length', 50);
+
         if(Auth::user()->role == 'admin'){
             $ids = AgencyJobChanges::pluck('job_id');
-            $jobs = AgencyJobs::WhereNotIn('id',$ids)->with('agency')->get();
-            if($request->wantsJson()){
-                $data = array();
-                $data['code'] = 200;
-                $data['jobs'] = $jobs;
-                return response()->json($data);
+            $jobs = AgencyJobs::WhereNotIn('id',$ids)->with('agency');
+            $_total = $jobs->count();
+            $value = $columns[17]['search']['value'] ?? '';
+            if($value){
+                $jobs = $jobs->where('status',$value);
             }
-            return view('job.adminhome')->with('jobs', $jobs);
+            // sorting
+            if( $request->has('order') ) {
+                $_sort_field_data = $request->get('order')[0];
+                $_filed_name = $_sort_field_data['column'];
+                $_sort_type = $_sort_field_data['dir'];
+                $_filed_name_val = $columns[$_filed_name]['data'];
+                $jobs->orderBy($_filed_name_val, $_sort_type);
+            }
+            $globalSearch = array();
+            $columnSearch = array();
+
+            $bindings = array();
+
+            if ( $request->has('search') && $request->get('search')['value'] != '' ) {
+                $str = $request->get('search')['value'];
+
+                for ( $i=0, $ien=count($columns); $i<$ien; $i++ ) {
+                    if( $columns[$i]['data'] != 'id' && $columns[$i]['data'] != 'agency.name') {
+                        $requestColumn = $columns[$i];
+                        // $columnIdx = array_search( $requestColumn['data'], $dtColumns );
+                        // $column = $columns[ $columnIdx ];
+
+                        if ( $requestColumn['searchable'] == 'true' ) {
+                            // $binding = self::bind( $bindings, '%'.$str.'%', \PDO::PARAM_STR );
+                            $binding = "'%".$str."%'";
+                            $globalSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                        }
+                    }
+                }
+            }
+
+            // Individual column filtering
+            if ( isset( $request['columns'] ) ) {
+                for ( $i=0, $ien=count($request['columns']) ; $i<$ien ; $i++ ) {
+                    $requestColumn = $request['columns'][$i];
+                    // $columnIdx = array_search( $requestColumn['data'], $dtColumns );
+                    // $column = $columns[ $columnIdx ];
+
+                    $str = $requestColumn['search']['value'];
+
+                    if ( $requestColumn['searchable'] == 'true' &&
+                     $str != '' ) {
+                        // $binding = self::bind( $bindings, "%".$str."%", \PDO::PARAM_STR );
+                        $binding = "'%".$str."%'";
+                        $columnSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                    }
+                }
+            }
+
+            // Combine the filters into a single string
+            $where = '';
+
+            if ( count( $globalSearch ) ) {
+                $where = '('.implode(' OR ', $globalSearch).')';
+            }
+
+            if ( count( $columnSearch ) ) {
+                $where = $where === '' ?
+                    implode(' AND ', $columnSearch) :
+                    $where .' AND '. implode(' AND ', $columnSearch);
+            }
+
+            if ( $where !== '' ) {
+                // $where = 'WHERE '.$where;
+                $jobs->whereRaw($where);
+            }
+
+            // dd($where);
+
+            // if($request->has('search') && $request->get('search')['value'] != '') {
+            //     $term = $request->get('search')['value'];
+            //     foreach ($columns as $key => $value) {
+            //         if( $value['data'] != 'id' && $value['data'] != 'agency.name') {
+            //             $jobs->orWhere($value['data'], 'LIKE', "%".$term."%");
+            //         }
+            //     }
+            //     // dd($columns);
+            // }
+            $data = array();
+            $data['iTotalDisplayRecords']  = $jobs->count();
+            $jobs = $jobs->skip($start)->take($length)->get();
+            // $jobs = $jobs->skip($start)->take($length)->toSql();
+
+            $data['code'] = 200;
+            $data['jobs'] = $jobs;
+            $data['iTotalRecords']  = $_total;
+            // $data['sEcho']  = 10;
+
+            return response()->json($data);
+
         }
         if(Auth::user()->role == 'agency'){
             $ids = AgencyJobChanges::where('agency_id',Auth::Id())->pluck('job_id');
@@ -72,9 +155,114 @@ class JobController extends Controller
         if(Auth::user()->role == 'agency'){
             return redirect('job');
         }else{
-            $jobs = AgencyJobChanges::all();
-            return view('job.pendinghome')->with('jobs', $jobs);
+            return view('job.pendinghome');
         }
+    }
+    public function postPendingIndex(Request $request){
+        if(Auth::user()->role == 'agency'){
+            return redirect('job');
+        }
+
+        $columns = $request->get('columns');
+        $start = $request->get('start', 0);
+        $length = $request->get('length', 50);
+
+
+        $jobs = AgencyJobChanges::with('agency','originalJob')->latest();
+        $_total = $jobs->count();
+        $value = $columns[17]['search']['value'] ?? '';
+        if($value){
+            $jobs = $jobs->where('status',$value);
+        }
+        // sorting
+        if( $request->has('order') ) {
+            $_sort_field_data = $request->get('order')[0];
+            $_filed_name = $_sort_field_data['column'];
+            $_sort_type = $_sort_field_data['dir'];
+            $_filed_name_val = $columns[$_filed_name]['data'];
+            $jobs->orderBy($_filed_name_val, $_sort_type);
+        }
+        $globalSearch = array();
+        $columnSearch = array();
+
+        $bindings = array();
+
+        if ( $request->has('search') && $request->get('search')['value'] != '' ) {
+            $str = $request->get('search')['value'];
+
+            for ( $i=0, $ien=count($columns); $i<$ien; $i++ ) {
+                if( $columns[$i]['data'] != 'id' && $columns[$i]['data'] != 'agency.name') {
+                    $requestColumn = $columns[$i];
+                    // $columnIdx = array_search( $requestColumn['data'], $dtColumns );
+                    // $column = $columns[ $columnIdx ];
+
+                    if ( $requestColumn['searchable'] == 'true' ) {
+                        // $binding = self::bind( $bindings, '%'.$str.'%', \PDO::PARAM_STR );
+                        $binding = "'%".$str."%'";
+                        $globalSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                    }
+                }
+            }
+        }
+
+        // Individual column filtering
+        if ( isset( $request['columns'] ) ) {
+            for ( $i=0, $ien=count($request['columns']) ; $i<$ien ; $i++ ) {
+                $requestColumn = $request['columns'][$i];
+                // $columnIdx = array_search( $requestColumn['data'], $dtColumns );
+                // $column = $columns[ $columnIdx ];
+
+                $str = $requestColumn['search']['value'];
+
+                if ( $requestColumn['searchable'] == 'true' &&
+                 $str != '' ) {
+                    // $binding = self::bind( $bindings, "%".$str."%", \PDO::PARAM_STR );
+                    $binding = "'%".$str."%'";
+                    $columnSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                }
+            }
+        }
+
+        // Combine the filters into a single string
+        $where = '';
+
+        if ( count( $globalSearch ) ) {
+            $where = '('.implode(' OR ', $globalSearch).')';
+        }
+
+        if ( count( $columnSearch ) ) {
+            $where = $where === '' ?
+                implode(' AND ', $columnSearch) :
+                $where .' AND '. implode(' AND ', $columnSearch);
+        }
+
+        if ( $where !== '' ) {
+            // $where = 'WHERE '.$where;
+            $jobs->whereRaw($where);
+        }
+
+        // dd($where);
+
+        // if($request->has('search') && $request->get('search')['value'] != '') {
+        //     $term = $request->get('search')['value'];
+        //     foreach ($columns as $key => $value) {
+        //         if( $value['data'] != 'id' && $value['data'] != 'agency.name') {
+        //             $jobs->orWhere($value['data'], 'LIKE', "%".$term."%");
+        //         }
+        //     }
+        //     // dd($columns);
+        // }
+        $data = array();
+        $data['iTotalDisplayRecords']  = $jobs->count();
+        $jobs = $jobs->skip($start)->take($length)->get();
+        // $jobs = $jobs->skip($start)->take($length)->toSql();
+
+        $data['code'] = 200;
+        $data['jobs'] = $jobs;
+        $data['iTotalRecords']  = $_total;
+        // $data['sEcho']  = 10;
+
+        return response()->json($data);
     }
 
     public function getDeleted(Request $request){
@@ -82,11 +270,115 @@ class JobController extends Controller
         if(Auth::user()->role == 'agency'){
             return redirect('job');
         }else{
-            $jobs = AgencyJobs::onlyTrashed()->get();
-            return view('job.deletedhome')->with('jobs', $jobs);
+            return view('job.deletedhome');
         }
     }
+    public function postDeletedIndex(Request $request){
+        if(Auth::user()->role == 'agency'){
+            return redirect('job');
+        }
 
+        $columns = $request->get('columns');
+        $start = $request->get('start', 0);
+        $length = $request->get('length', 50);
+
+
+        $jobs = AgencyJobs::onlyTrashed()->with('agency')->latest();
+        $_total = $jobs->count();
+        $value = $columns[17]['search']['value'] ?? '';
+        if($value){
+            $jobs = $jobs->where('status',$value);
+        }
+        // sorting
+        if( $request->has('order') ) {
+            $_sort_field_data = $request->get('order')[0];
+            $_filed_name = $_sort_field_data['column'];
+            $_sort_type = $_sort_field_data['dir'];
+            $_filed_name_val = $columns[$_filed_name]['data'];
+            $jobs->orderBy($_filed_name_val, $_sort_type);
+        }
+        $globalSearch = array();
+        $columnSearch = array();
+
+        $bindings = array();
+
+        if ( $request->has('search') && $request->get('search')['value'] != '' ) {
+            $str = $request->get('search')['value'];
+
+            for ( $i=0, $ien=count($columns); $i<$ien; $i++ ) {
+                if( $columns[$i]['data'] != 'id' && $columns[$i]['data'] != 'agency.name') {
+                    $requestColumn = $columns[$i];
+                    // $columnIdx = array_search( $requestColumn['data'], $dtColumns );
+                    // $column = $columns[ $columnIdx ];
+
+                    if ( $requestColumn['searchable'] == 'true' ) {
+                        // $binding = self::bind( $bindings, '%'.$str.'%', \PDO::PARAM_STR );
+                        $binding = "'%".$str."%'";
+                        $globalSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                    }
+                }
+            }
+        }
+
+        // Individual column filtering
+        if ( isset( $request['columns'] ) ) {
+            for ( $i=0, $ien=count($request['columns']) ; $i<$ien ; $i++ ) {
+                $requestColumn = $request['columns'][$i];
+                // $columnIdx = array_search( $requestColumn['data'], $dtColumns );
+                // $column = $columns[ $columnIdx ];
+
+                $str = $requestColumn['search']['value'];
+
+                if ( $requestColumn['searchable'] == 'true' &&
+                 $str != '' ) {
+                    // $binding = self::bind( $bindings, "%".$str."%", \PDO::PARAM_STR );
+                    $binding = "'%".$str."%'";
+                    $columnSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                }
+            }
+        }
+
+        // Combine the filters into a single string
+        $where = '';
+
+        if ( count( $globalSearch ) ) {
+            $where = '('.implode(' OR ', $globalSearch).')';
+        }
+
+        if ( count( $columnSearch ) ) {
+            $where = $where === '' ?
+                implode(' AND ', $columnSearch) :
+                $where .' AND '. implode(' AND ', $columnSearch);
+        }
+
+        if ( $where !== '' ) {
+            // $where = 'WHERE '.$where;
+            $jobs->whereRaw($where);
+        }
+
+        // dd($where);
+
+        // if($request->has('search') && $request->get('search')['value'] != '') {
+        //     $term = $request->get('search')['value'];
+        //     foreach ($columns as $key => $value) {
+        //         if( $value['data'] != 'id' && $value['data'] != 'agency.name') {
+        //             $jobs->orWhere($value['data'], 'LIKE', "%".$term."%");
+        //         }
+        //     }
+        //     // dd($columns);
+        // }
+        $data = array();
+        $data['iTotalDisplayRecords']  = $jobs->count();
+        $jobs = $jobs->skip($start)->take($length)->get();
+        // $jobs = $jobs->skip($start)->take($length)->toSql();
+
+        $data['code'] = 200;
+        $data['jobs'] = $jobs;
+        $data['iTotalRecords']  = $_total;
+        // $data['sEcho']  = 10;
+
+        return response()->json($data);
+    }
     public function add(Request $request){
 
         return view('job.add');

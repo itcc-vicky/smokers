@@ -24,15 +24,20 @@ Route::delete('agency/delete', 'AgencyController@postDelete')->name('agencyPostD
 
 Route::get('job', 'JobController@index')->name('job');
 Route::post('job', 'JobController@postIndex')->name('postJob');
+
 Route::get('job/pending', 'JobController@getPending')->name('jobPending');
+Route::post('job/pending', 'JobController@postPendingIndex')->name('postPendingIndex');
+
 Route::get('job/deleted', 'JobController@getDeleted')->name('jobDeleted');
+Route::post('job/deleted', 'JobController@postDeletedIndex')->name('postDeletedIndex');
+
 Route::get('job/add', 'JobController@add')->name('jobAdd');
 Route::get('job/edit/{id}', 'JobController@edit')->name('jobEdit');
 Route::get('job/preview/{id}', 'JobController@preview')->name('jobPreviewChanges');
-Route::post('job/update', 'JobController@postUpdate')->name('jobPostUpdate');
 Route::get('job/approve/{id}', 'JobController@postApprove')->name('jobPostApprove');
 Route::get('job/decline/{id}', 'JobController@postDecline')->name('jobPostDecline');
 Route::get('job/restore/{id}', 'JobController@postRestore')->name('jobPostRestore');
+Route::post('job/update', 'JobController@postUpdate')->name('jobPostUpdate');
 Route::delete('job/delete', 'JobController@postDelete')->name('jobPostDelete');
 Route::post('job/changejobbulkstatus', 'JobController@changeJobBulkStatus')->name('changeJobBulkStatus');
 
