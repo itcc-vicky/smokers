@@ -58,31 +58,31 @@
             <section class="panel">
                 <header class="panel-heading panel-border"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                     &nbsp;
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Compliant">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Compliant">
                         <span>
                             <i class="la la-search"></i>
                             <span>Compliant</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Quoted">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Quoted">
                         <span>
                             <i class="la la-search"></i>
                             <span>Quoted</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Booked In">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Booked In">
                         <span>
                             <i class="la la-search"></i>
                             <span>Booked In</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Overdue">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Overdue">
                         <span>
                             <i class="la la-search"></i>
                             <span>Overdue</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="On Hold">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="On Hold">
                         <span>
                             <i class="la la-search"></i>
                             <span>On Hold</span>
@@ -188,7 +188,24 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             <'row'<'col-sm-12't>>
             <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
-            buttons: [ 'print' ],
+            buttons: [
+                {
+                    extend: 'print',
+                    orientation: 'landscape',
+                    pageSize: 'A4',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    customize: function ( win ) {
+                        $(win.document.body)
+                            .css( 'font-size', '10pt' );
+
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    }
+                }
+            ],
             language: {
                 'lengthMenu': 'Display _MENU_',
             },
@@ -264,7 +281,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     },
                 },
                 {
-                    targets: 15,
+                    targets: [6, 7, 15],
                     render: function(data, type, full, meta) {
                         if( data != null ) {
                             return '<p class="m-0" data-toggle="tooltip" data-placement="top" title="'+data+'">'+data.substr(0,15)+' </p>';
@@ -303,9 +320,10 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 },
                 {
                     targets: 14,
+                    width:'10%',
                     render: function(data, type, full, meta) {
                         var status = {
-                            'NA' : {'title': 'NA', 'class': 'bg-danger'},
+                            'NA' : {'title': 'NA', 'class': 'label bg-danger'},
                             'January' : {'title': 'January', 'class': ''},
                             'February' : {'title': 'February', 'class': ''},
                             'March' : {'title': 'March', 'class': ''},
@@ -323,7 +341,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                             return data;
                         }
 
-                        return '<span class="label ' + status[data].class + '">' + status[data].title + '</span>';
+                        return '<span class="' + status[data].class + '">' + status[data].title + '</span>';
 
                     },
                 },

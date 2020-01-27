@@ -58,31 +58,31 @@
             <section class="panel">
                 <header class="panel-heading panel-border"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                     &nbsp;
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Compliant">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Compliant">
                         <span>
                             <i class="la la-search"></i>
                             <span>Compliant</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Quoted">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Quoted">
                         <span>
                             <i class="la la-search"></i>
                             <span>Quoted</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Booked In">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Booked In">
                         <span>
                             <i class="la la-search"></i>
                             <span>Booked In</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="Overdue">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Overdue">
                         <span>
                             <i class="la la-search"></i>
                             <span>Overdue</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon kt_search" value="On Hold">
+                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="On Hold">
                         <span>
                             <i class="la la-search"></i>
                             <span>On Hold</span>
@@ -160,10 +160,10 @@
                         <td> {{ $job->key }} </td>
                         <td> {{ $job->country }} </td>
                         <td> {{ $job->location_area }} </td>
-                        <td class="{{ $job->service_month == 'NA' ? 'bg-danger' : '' }}" > {{ $job->service_month }} </td>
+                        <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
                         <td> {{ $job->tenant }} </td>
                         <td> {{ $job->contact_details }} </td>
-                        <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}"> {{ $job->status }} @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif </td>
+                        <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
                         <td> {{ $job->loc_custom_field_1 }} </td>
                         <td> {{ $job->t_custom_field_1 }} </td>
                         <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : ''}} </td>
@@ -199,10 +199,10 @@
                         <td> {{ $job->key }} </td>
                         <td> {{ $job->country }} </td>
                         <td> {{ $job->location_area }} </td>
-                        <td class="{{ $job->service_month == 'NA' ? 'bg-danger' : '' }}" > {{ $job->service_month }} </td>
+                        <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
                         <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->tenant}}">{{ Illuminate\Support\Str::limit($job->tenant, 15) }} </p></td>
                         <td> {{ $job->contact_details }} </td>
-                        <td class="{{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}"> {{ $job->status }} @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} @endif </td>
+                        <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
                         <td> {{ $job->loc_custom_field_1 }} </td>
                         <td> {{ $job->t_custom_field_1 }} </td>
                         <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>
@@ -256,7 +256,24 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             <'row'<'col-sm-12't>>
             <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
-            buttons: [ 'print' ],
+            buttons: [
+                {
+                    extend: 'print',
+                    orientation: 'landscape',
+                    pageSize: 'A4',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    customize: function ( win ) {
+                        $(win.document.body)
+                            .css( 'font-size', '10pt' );
+
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    }
+                }
+            ],
             language: {
                 'lengthMenu': 'Display _MENU_',
             },

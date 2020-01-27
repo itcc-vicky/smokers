@@ -142,7 +142,24 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             <'row'<'col-sm-12't>>
             <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
-            buttons: [ 'print' ],
+            buttons: [
+                {
+                    extend: 'print',
+                    orientation: 'landscape',
+                    pageSize: 'A4',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    customize: function ( win ) {
+                        $(win.document.body)
+                            .css( 'font-size', '10pt' );
+
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    }
+                }
+            ],
             language: {
                 'lengthMenu': 'Display _MENU_',
             },
@@ -370,7 +387,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     targets:14,
                     render: function(data, type, full, meta) {
                         var status = {
-                            'NA' : {'title': 'NA', 'class': 'bg-danger'},
+                            'NA' : {'title': 'NA', 'class': 'label bg-danger'},
                             'January' : {'title': 'January', 'class': ''},
                             'February' : {'title': 'February', 'class': ''},
                             'March' : {'title': 'March', 'class': ''},
