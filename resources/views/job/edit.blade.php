@@ -347,22 +347,17 @@
                                     <textarea class="form-control autoresizenone" id="comments" name="comments" placeholder="Comments" rows="3">{{ $job->comments }}</textarea>
                                 </div>
 
-                                <button type="submit" id="editJobButton" class="btn btn-primary pull-right m-5">Submit</button>
-                                <a href="{{ route('job') }}" class="btn btn-danger pull-left">Cancel</a>
-                                <button type="button" onclick="openDeleteDialog('#deleteJob{{$job->id}}');"  class="btn btn-danger pull-left ml-5">Delete</button>
                                 <div class="clearfix"></div>
 
-
-
-                                <div id="append_row" style="margin-top: 20px;">
-                                    <div class="row form-group">
+                                <div class="append_main" id="append_row">
+                                    <div class="row form-group append_main_tab">
                                         <label class="col-lg-2 col-form-label">Add Invoice:</label>
                                         <div class="col-lg-10">
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <input class="form-control" accept="application/pdf,application/msword,
   application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*" placeholder="Enter email" name="invoice_name[]" type="file">
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
                                                     <option value="Alarm" selected>Alarm</option>
                                                     <option value="Heater">Heater</option>
@@ -375,7 +370,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+
                             <div class="clearfix"></div>
                             <div class="panel panel-primary" style="margin-top: 20px;">
                                 <header class="panel-heading text-left">
@@ -418,6 +413,12 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <button type="submit" id="editJobButton" class="btn btn-primary pull-right m-5">Submit</button>
+                                <a href="{{ route('job') }}" class="btn btn-danger pull-left">Cancel</a>
+                                <button type="button" onclick="openDeleteDialog('#deleteJob{{$job->id}}');"  class="btn btn-danger pull-left ml-5">Delete</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -438,13 +439,13 @@ $(document).ready(function() {
     $('#add_new_invoice').on('click', function(e) {
         e.preventDefault();
         $('#append_row').append(`
-                <div class="row form-group" id="myrow_`+_count+`">
+                <div class="row form-group append_main_tab" id="myrow_`+_count+`">
                     <label class="col-lg-2 col-form-label">Add Invoice:</label>
                     <div class="col-lg-10">
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <input class="form-control" placeholder="Enter email" name="invoice_name[]" type="file">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
                                 <option value="Alarm" selected>Alarm</option>
                                 <option value="Heater">Heater</option>

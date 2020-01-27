@@ -7,32 +7,21 @@
     <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-scroller/css/scroller.dataTables.scss') }}" rel="stylesheet">
     <style>
-        table.dataTable tbody td {
-            word-break: break-word !important;
-            vertical-align: top;
-        }
-        table.dataTable tbody th, table.dataTable tbody td {
-            padding: 8px 6px;
-            font-size: 13px;
-        }
-        table.dataTable thead th, table.dataTable tfoot th {
-            font-weight: 600;
-            font-size: 13px;
-        }
-        .panel-body {
-            padding: 15px 5px;
-        }
+        .i-checks { margin:0; }
+        .i-checks > i { width: 15px !important; height: 15px !important;margin-right: 10px !important;}
+        .btn_inline { padding: 2px 10px !important; }
+        .table { width: 100% !important; }
+        .label { color: #626262;}
+        div.ColVis { margin: 0 10px;}
+        button.ColVis_Button.ColVis_MasterButton { background: #4aa9e9 !important; color: #FFF !important; border-color: #4aa9e9 !important; }
+        .buttons-print { background: #62549a !important; color: #FFF !important; border-color: #62549a !important; }
+        table.dataTable tbody td { word-break: break-word !important; vertical-align: top; }
+        table.dataTable tbody th, table.dataTable tbody td { padding: 4px 7px; font-size: 13px; }
+        table.dataTable thead th, table.dataTable tfoot th { font-weight: 600; font-size: 13px; }
+        .panel-body { padding: 15px 5px; }
         .dt-buttons { float: right; }
-        .dt-buttons button {
-            outline: none;
-            background: #f3f3f3;
-            border-color: #ddd;
-            border: 1px solid #999;
-            color: black;
-            border-radius: 2px;
-            height: 30px;
-            padding: 3px 8px;
-        }
+        .dt-buttons button { outline: none; background: #f3f3f3; border-color: #ddd; border: 1px solid #999; color: black; border-radius: 2px; height: 30px; padding: 3px 8px; }
+        .dataTables_wrapper .dataTables_info { padding-top: 10px !important; }
     </style>
 @endpush
 
@@ -104,7 +93,7 @@
                             <span>Reset</span>
                         </span>
                     </button>
-                    <span class="new_button pull-right">
+                    <span class="pull-right">
                         @if(request()->route()->getName() == 'job')
                         <a href="{{ route('jobAdd') }}" class="btn btn-info "><i class="fa fa-plus"></i> Add New Job</a>
                         @endif
@@ -114,49 +103,52 @@
             </section>
         </div>
     </div>
-
-    <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-        <thead>
-            <tr>
-                <th> Actions </th>
-                <th> Agency Name </th>
-                <th> Property Manager Name </th>
-                <th> Landlord </th>
-                <th> Landlord Contact</th>
-                <th> Landlord Email </th>
-                <th> No. </th>
-                <th> Street </th>
-                <th> Suburb </th>
-                <th> State </th>
-                <th> Postal Code </th>
-                <th> Key </th>
-                <th> Country </th>
-                <th> Area Location </th>
-                <th> Service Month </th>
-                <th> Tenant </th>
-                <th> Contact Details </th>
-                <th> Status </th>
-                <th> Location 1 </th>
-                <th> Type 1 </th>
-                <th> Exp Date 1 </th>
-                <th> Location 2 </th>
-                <th> Type 2 </th>
-                <th> Exp Date 2 </th>
-                <th> Location 3 </th>
-                <th> Type 3 </th>
-                <th> Exp Date 3 </th>
-                <th> Location 4 </th>
-                <th> Type 4 </th>
-                <th> Exp Date 4 </th>
-                <th> Comments </th>
-                <th> Service Plan </th>
-                <th> Services </th>
-                <th> Last Alarm Service Date </th>
-                <th> Last Heater Service Date </th>
-                <th> Last Solar Cleaning Service Date </th>
-            </tr>
-        </thead>
-    </table>
+    <div class="table table-responsive">
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <table class="table colvis-responsive-data-table table-striped dataTable table-bordered table-hover table-checkable" id="kt_table_1">
+                <thead>
+                    <tr>
+                        <th> Actions </th>
+                        <th> Agency Name </th>
+                        <th> Property Manager Name </th>
+                        <th> Landlord </th>
+                        <th> Landlord Contact</th>
+                        <th> Landlord Email </th>
+                        <th> No. </th>
+                        <th> Street </th>
+                        <th> Suburb </th>
+                        <th> State </th>
+                        <th> Postal Code </th>
+                        <th> Key </th>
+                        <th> Country </th>
+                        <th> Area Location </th>
+                        <th> Service Month </th>
+                        <th> Tenant </th>
+                        <th> Contact Details </th>
+                        <th> Status </th>
+                        <th> Location 1 </th>
+                        <th> Type 1 </th>
+                        <th> Exp Date 1 </th>
+                        <th> Location 2 </th>
+                        <th> Type 2 </th>
+                        <th> Exp Date 2 </th>
+                        <th> Location 3 </th>
+                        <th> Type 3 </th>
+                        <th> Exp Date 3 </th>
+                        <th> Location 4 </th>
+                        <th> Type 4 </th>
+                        <th> Exp Date 4 </th>
+                        <th> Comments </th>
+                        <th> Service Plan </th>
+                        <th> Services </th>
+                        <th> Last Alarm Service Date </th>
+                        <th> Last Heater Service Date </th>
+                        <th> Last Solar Cleaning Service Date </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
     <button class="btn btn-success" id="update_status">Reset Status</button>
 
 @endsection

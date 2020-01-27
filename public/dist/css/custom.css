@@ -83,3 +83,9 @@ select > option {
     .tbl-pagin { float: left; width: 100%; }
     .tbl-pagin .pagination { margin:0 0 10px 0;  }
 }
+
+
+.append_main { border: 1px solid #ccc; border-radius: 4px; padding: 10px 15px; }
+.append_main_tab { margin: 10px 0; }
+.append_main_tab label { margin: 0; padding-top: 6px; }
+.append_main_tab .btn { display:block; width:100%; min-width:-webkit-fill-available; }

@@ -3178,7 +3178,7 @@ a.DTTT_button:hover:not(.DTTT_disabled),
   margin-left: 10px; }
 
 .dataTables_wrapper .dataTables_info {
-  padding-top: 2.5em !important; }
+  padding-top: 2.5em ; }
 
 ul.ColVis_collection, ul.ColVis_collection li {
   -webkit-box-shadow: none !important;
