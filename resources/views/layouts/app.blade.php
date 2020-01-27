@@ -99,7 +99,7 @@
                     <li class="{{ request()->is('job*') ? 'active' : '' }}">
                         <a href="javascript::void(0)"><i class="fa fa-list-ul"></i><span>Jobs</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="nav nav-sub" style="display: {{ request()->is('job*') ? 'block' : 'none' }};">
-                            <li><a href="{{ route('job') }}" class="{{ request()->is('job') ? 'active' : '' }}"><i class="fa fa-tasks"></i><span>Jobs list</span></a></li>
+                            <li><a href="{{ route('job') }}" class="{{ request()->is('job') ? 'active' : '' }}"><i class="fa fa-file"></i><span>Jobs list</span></a></li>
                             <li><a href="{{ route('jobPending') }}" class="{{ request()->is('job/pending') ? 'active' : '' }}"><i class="fa fa-clock-o"></i><span>Pending Approval</span></a></li>
                             <li><a href="{{ route('jobDeleted') }}" class="{{ request()->is('job/deleted') ? 'active' : '' }}"><i class="fa fa-trash"></i><span>Deleted Jobs</span></a></li>
                         </ul>

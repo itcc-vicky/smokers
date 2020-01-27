@@ -447,13 +447,13 @@ $(document).ready(function() {
     $('#add_new_invoice').on('click', function(e) {
         e.preventDefault();
         $('#append_row').append(`
-                <div class="row form-group" id="myrow_`+_count+`">
+                <div class="row form-group append_main_tab" id="myrow_`+_count+`">
                     <label class="col-lg-2 col-form-label">Add Invoice:</label>
                     <div class="col-lg-10">
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <input class="form-control" placeholder="Enter email" name="invoice_name[]" type="file">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
                                 <option value="Alarm" selected>Alarm</option>
                                 <option value="Heater">Heater</option>

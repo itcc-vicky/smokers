@@ -88,7 +88,7 @@
                             <span>On Hold</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-brand--icon" id="kt_reset">
+                    <button class="btn btn-primary btn-sm btn-brand--icon" id="kt_reset">
                         <span>
                             <i class="la la-search"></i>
                             <span>Reset</span>
@@ -96,7 +96,7 @@
                     </button>
                     <span class="pull-right">
                         @if(request()->route()->getName() == 'job')
-                        <a href="{{ route('jobAdd') }}" class="btn btn-info "><i class="fa fa-plus"></i> Add New Job</a>
+                        <a href="{{ route('jobAdd') }}" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add New Job</a>
                         @endif
                     </span>
                 </header>

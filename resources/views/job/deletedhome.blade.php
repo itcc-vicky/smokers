@@ -233,7 +233,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     },
                 },
                 {
-                    targets: 15,
+                    targets: [6, 7, 15],
                     render: function(data, type, full, meta) {
                         if( data != null ) {
                             return '<p class="m-0" data-toggle="tooltip" data-placement="top" title="'+data+'">'+data.substr(0,15)+' </p>';
@@ -283,7 +283,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                             return data;
                         }
 
-                        return '<span class="label ' + status[data].class + '">' + status[data].title + '</span>';
+                        return '<span class="' + status[data].class + '">' + status[data].title + '</span>';
 
                     },
                 },

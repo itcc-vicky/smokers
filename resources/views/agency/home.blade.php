@@ -51,7 +51,7 @@
                 <header class="panel-heading panel-border">
                     &nbsp;
                     <span class="new_button pull-right">
-                        <a href="{{ route('agencyAdd') }}" class="btn btn-info "><i class="fa fa-plus"></i> Add New Agency</a>
+                        <a href="{{ route('agencyAdd') }}" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add New Agency</a>
                     </span>
                 </header>
                 <div class="panel-body">
