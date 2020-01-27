@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('bower_components/datatables/media/css/jquery.dataTables.css') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-tabletools/css/dataTables.tableTools.css') }}" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-colvis/css/dataTables.colVis.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-scroller/css/scroller.dataTables.scss') }}" rel="stylesheet">
     <style>
         table.dataTable tbody td {
@@ -172,9 +172,9 @@
 
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('bower_components/datatables-tabletools/js/dataTables.tableTools.js') }}"></script>
-<script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.js"></script>
 <script src="{{ asset('bower_components/datatables-colvis/js/dataTables.colVis.js') }}"></script>
-<script src="{{ asset('bower_components/datatables-responsive/js/dataTables.responsive.js') }}"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.js"></script>
 <script src="{{ asset('bower_components/datatables-scroller/js/dataTables.scroller.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
@@ -189,7 +189,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
     var initTable1 = function() {
         // begin first table
         var table = $('#kt_table_1').DataTable({
-            responsive: true,
+            responsive: false,
             // Pagination settings
             dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'BCf>>
             <'row'<'col-sm-12't>>
@@ -200,7 +200,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 'lengthMenu': 'Display _MENU_',
             },
             lengthMenu: [5, 10, 25, 50],
-
+            // scrollX: true,
             pageLength: 50,
             bServerSide:true,
             searchDelay: 1000,
