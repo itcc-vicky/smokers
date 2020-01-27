@@ -7,6 +7,7 @@
     <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-scroller/css/scroller.dataTables.scss') }}" rel="stylesheet">
     <style>
+        table.dataTable tbody td {word-break: break-word !important;vertical-align: top;}
         .i-checks { margin:0; }
         .i-checks > i { width: 15px !important; height: 15px !important;margin-right: 10px !important;}
         .btn_inline { padding: 2px 10px !important; }

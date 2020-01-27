@@ -51,13 +51,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="property_manager_name">Property Manager Name<span class="text-danger">&nbsp;*</span></label>
-                                            <input class="form-control" id="property_manager_name" name="property_manager_name" placeholder="Property Manager Name" type="text" value="{{ $job->property_manager_name }}">
+                                            <input class="form-control" id="property_manager_name" name="property_manager_name" type="text" value="{{ $job->property_manager_name }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="landlord">Landlord</label>
-                                            <input class="form-control" id="landlord" name="landlord" placeholder="Landlord" type="text" value="{{ $job->landlord }}">
+                                            <input class="form-control" id="landlord" name="landlord" type="text" value="{{ $job->landlord }}">
                                         </div>
                                     </div>
                                 </div>
@@ -66,13 +66,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="landlord_contact">Landlord Contact</label>
-                                            <input class="form-control" id="landlord_contact" name="landlord_contact" placeholder="Landlord Contact" type="text" value="{{ $job->landlord_contact }}">
+                                            <input class="form-control" id="landlord_contact" name="landlord_contact"  type="text" value="{{ $job->landlord_contact }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="landlord_email">Landlord Email</label>
-                                            <input class="form-control" id="landlord_email" name="landlord_email" placeholder="Landlord Email" type="text" value="{{ $job->landlord_email }}">
+                                            <input class="form-control" id="landlord_email" name="landlord_email" type="text" value="{{ $job->landlord_email }}">
                                         </div>
                                     </div>
                                 </div>
@@ -86,13 +86,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="street_number">No.<span class="text-danger">&nbsp;*</span></label>
-                                            <input class="form-control" id="street_number" name="address_line_1" placeholder="No." type="text" value="{{ $job->address_line_1 }}">
+                                            <input class="form-control" id="street_number" name="address_line_1" type="text" value="{{ $job->address_line_1 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="route">Street<span class="text-danger">&nbsp;*</span></label>
-                                            <input class="form-control" id="route" name="address_line_2" placeholder="Street" type="text" value="{{ $job->address_line_2 }}">
+                                            <input class="form-control" id="route" name="address_line_2" type="text" value="{{ $job->address_line_2 }}">
                                         </div>
                                     </div>
                                 </div>
@@ -101,13 +101,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="locality">Suburb<span class="text-danger">&nbsp;*</span></label>
-                                            <input class="form-control" id="locality" name="city" placeholder="Suburb" type="text" value="{{ $job->city }}">
+                                            <input class="form-control" id="locality" name="city" type="text" value="{{ $job->city }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="administrative_area_level_1">State<span class="text-danger">&nbsp;*</span></label>
-                                            <input class="form-control" id="administrative_area_level_1" name="state" placeholder="State" type="text" value="{{ $job->state }}">
+                                            <input class="form-control" id="administrative_area_level_1" name="state" type="text" value="{{ $job->state }}">
                                         </div>
                                     </div>
                                 </div>
@@ -116,13 +116,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="country">Country<span class="text-danger">&nbsp;*</span></label>
-                                            <input class="form-control" id="country" name="country" placeholder="Country" type="text" value="{{ $job->country }}">
+                                            <input class="form-control" id="country" name="country" type="text" value="{{ $job->country }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="postal_code">Postal Code<span class="text-danger">&nbsp;*</span></label>
-                                            <input class="form-control" id="postal_code" name="postal_code" placeholder="Postal Code" type="text" value="{{ $job->postal_code }}">
+                                            <input class="form-control" id="postal_code" name="postal_code" type="text" value="{{ $job->postal_code }}">
                                         </div>
                                     </div>
                                 </div>
@@ -131,13 +131,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="location_area">Area Location</label>
-                                            <input class="form-control" id="location_area" name="location_area" placeholder="Area Location" type="text" value="{{ $job->location_area }}">
+                                            <input class="form-control" id="location_area" name="location_area" type="text" value="{{ $job->location_area }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="key">Key #</label>
-                                            <input class="form-control" id="key" name="key" placeholder="Landlord Contact" type="text" value="{{ $job->key }}">
+                                            <input class="form-control" id="key" name="key"  type="text" value="{{ $job->key }}">
                                         </div>
                                     </div>
                                 </div>
@@ -146,13 +146,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="tenant">Tenant</label>
-                                            <input class="form-control" id="tenant" name="tenant" placeholder="Tenant" type="text" value="{{ $job->tenant }}">
+                                            <input class="form-control" id="tenant" name="tenant" type="text" value="{{ $job->tenant }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="contact_details">Contact Details</label>
-                                            <input class="form-control" id="contact_details" name="contact_details" placeholder="Contact Details" type="text" value="{{ $job->contact_details }}">
+                                            <input class="form-control" id="contact_details" name="contact_details" type="text" value="{{ $job->contact_details }}">
                                         </div>
                                     </div>
                                 </div>
@@ -201,13 +201,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="loc_custom_field_1">Location 1</label>
-                                            <input class="form-control" id="loc_custom_field_1" name="loc_custom_field_1" placeholder="Location 1" type="text" value="{{ $job->loc_custom_field_1 }}">
+                                            <input class="form-control" id="loc_custom_field_1" name="loc_custom_field_1" type="text" value="{{ $job->loc_custom_field_1 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="t_custom_field_1">Type 1</label>
-                                            <input class="form-control" id="t_custom_field_1" name="t_custom_field_1" placeholder="Type 1" type="text" value="{{ $job->t_custom_field_1 }}">
+                                            <input class="form-control" id="t_custom_field_1" name="t_custom_field_1" type="text" value="{{ $job->t_custom_field_1 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -222,13 +222,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="loc_custom_field_2">Location 2</label>
-                                            <input class="form-control" id="loc_custom_field_2" name="loc_custom_field_2" placeholder="Location 2" type="text" value="{{ $job->loc_custom_field_2 }}">
+                                            <input class="form-control" id="loc_custom_field_2" name="loc_custom_field_2" type="text" value="{{ $job->loc_custom_field_2 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="t_custom_field_2">Type 2</label>
-                                            <input class="form-control" id="t_custom_field_2" name="t_custom_field_2" placeholder="Type 2" type="text" value="{{ $job->t_custom_field_2 }}">
+                                            <input class="form-control" id="t_custom_field_2" name="t_custom_field_2" type="text" value="{{ $job->t_custom_field_2 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -243,13 +243,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="loc_custom_field_3">Location 3</label>
-                                            <input class="form-control" id="loc_custom_field_3" name="loc_custom_field_3" placeholder="Location 3" type="text" value="{{ $job->loc_custom_field_3 }}">
+                                            <input class="form-control" id="loc_custom_field_3" name="loc_custom_field_3" type="text" value="{{ $job->loc_custom_field_3 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="t_custom_field_3">Type 3</label>
-                                            <input class="form-control" id="t_custom_field_3" name="t_custom_field_3" placeholder="Type 3" type="text" value="{{ $job->t_custom_field_3 }}">
+                                            <input class="form-control" id="t_custom_field_3" name="t_custom_field_3" type="text" value="{{ $job->t_custom_field_3 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -264,13 +264,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="loc_custom_field_4">Location 4</label>
-                                            <input class="form-control" id="loc_custom_field_4" name="loc_custom_field_4" placeholder="Location 4" type="text" value="{{ $job->loc_custom_field_4 }}">
+                                            <input class="form-control" id="loc_custom_field_4" name="loc_custom_field_4" type="text" value="{{ $job->loc_custom_field_4 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="t_custom_field_4">Type 4</label>
-                                            <input class="form-control" id="t_custom_field_4" name="t_custom_field_4" placeholder="Type 4" type="text" value="{{ $job->t_custom_field_4 }}">
+                                            <input class="form-control" id="t_custom_field_4" name="t_custom_field_4" type="text" value="{{ $job->t_custom_field_4 }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -344,7 +344,7 @@
 
                                 <div class="form-group">
                                     <label for="comments">Comments</label>
-                                    <textarea class="form-control autoresizenone" id="comments" name="comments" placeholder="Comments" rows="3">{{ $job->comments }}</textarea>
+                                    <textarea class="form-control autoresizenone" id="comments" name="comments" rows="3">{{ $job->comments }}</textarea>
                                 </div>
 
                                 <div class="clearfix"></div>
@@ -354,8 +354,7 @@
                                         <label class="col-lg-2 col-form-label">Add Invoice:</label>
                                         <div class="col-lg-10">
                                             <div class="col-md-5">
-                                                <input class="form-control" accept="application/pdf,application/msword,
-  application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*" placeholder="Enter email" name="invoice_name[]" type="file">
+                                                <input class="form-control" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*" placeholder="Enter email" name="invoice_name[]" type="file">
                                             </div>
                                             <div class="col-md-5">
                                                 <select class="form-control" id="services" name="service_name[]" onchange="toggleServiceDates();">
@@ -414,7 +413,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" id="editJobButton" class="btn btn-primary pull-right m-5">Submit</button>
+                                <button type="submit" id="editJobButton" class="btn btn-primary pull-right m-5">Submit</button>
                                 <a href="{{ route('job') }}" class="btn btn-danger pull-left">Cancel</a>
                                 <button type="button" onclick="openDeleteDialog('#deleteJob{{$job->id}}');"  class="btn btn-danger pull-left ml-5">Delete</button>
                             </form>

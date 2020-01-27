@@ -1,27 +1,28 @@
 @extends('layouts.app')
 
 @push('styles')
-    <link href="{{ asset('bower_components/datatables/media/css/jquery.dataTables.css') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-tabletools/css/dataTables.tableTools.css') }}" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-colvis/css/dataTables.colVis.css') }}" rel="stylesheet">
-    <link href="{{ asset('bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-scroller/css/scroller.dataTables.scss') }}" rel="stylesheet">
     <style>
-        table.dataTable tbody td {
-            word-break: break-word !important;
-            vertical-align: top;
-        }
-        table.dataTable tbody th, table.dataTable tbody td {
-            padding: 8px 6px;
-            font-size: 13px;
-        }
-        table.dataTable thead th, table.dataTable tfoot th {
-            font-weight: 600;
-            font-size: 13px;
-        }
-        .panel-body {
-            padding: 15px 5px;
-        }
+        table.dataTable tbody td {word-break: break-word !important;vertical-align: top;}
+        .i-checks { margin:0; }
+        .i-checks > i { width: 15px !important; height: 15px !important;margin-right: 10px !important;}
+        .btn_inline { padding: 2px 10px !important; }
+        .table { width: 100% !important; }
+        .label { color: #626262;}
+        div.ColVis { margin: 0 10px;}
+        button.ColVis_Button.ColVis_MasterButton { background: #4aa9e9 !important; color: #FFF !important; border-color: #4aa9e9 !important; }
+        .buttons-print { background: #62549a !important; color: #FFF !important; border-color: #62549a !important; }
+        table.dataTable tbody td { word-break: break-word !important; vertical-align: top; }
+        table.dataTable tbody th, table.dataTable tbody td { padding: 4px 7px; font-size: 13px; }
+        table.dataTable thead th, table.dataTable tfoot th { font-weight: 600; font-size: 13px; }
+        .panel-body { padding: 15px 5px; }
+        .dt-buttons { float: right; }
+        .dt-buttons button { outline: none; background: #f3f3f3; border-color: #ddd; border: 1px solid #999; color: black; border-radius: 2px; height: 30px; padding: 3px 8px; }
+        .dataTables_wrapper .dataTables_info { padding-top: 10px !important; }
     </style>
 @endpush
 
@@ -115,9 +116,9 @@
 
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('bower_components/datatables-tabletools/js/dataTables.tableTools.js') }}"></script>
-<script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.js"></script>
 <script src="{{ asset('bower_components/datatables-colvis/js/dataTables.colVis.js') }}"></script>
-<script src="{{ asset('bower_components/datatables-responsive/js/dataTables.responsive.js') }}"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.js"></script>
 <script src="{{ asset('bower_components/datatables-scroller/js/dataTables.scroller.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
@@ -134,7 +135,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
         var table = $('#kt_table_1').DataTable({
             responsive: true,
             // Pagination settings
-            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'TCf>>
+            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'BCf>>
             <'row'<'col-sm-12't>>
             <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html

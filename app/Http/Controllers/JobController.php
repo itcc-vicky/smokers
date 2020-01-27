@@ -35,6 +35,8 @@ class JobController extends Controller
             $ids = AgencyJobChanges::where('agency_id',Auth::Id())->pluck('job_id');
             $jobs = AgencyJobs::where('agency_id',Auth::Id())->WhereNotIn('id',$ids)->get();
             $clonedJobs = AgencyJobChanges::where('agency_id',Auth::Id())->get();
+            // dd($jobs);
+            // dd($clonedJobs);
             return view('job.userhome')->with('jobs', $jobs)->with('clonedJobs', $clonedJobs);
         }
     }
