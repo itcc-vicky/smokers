@@ -22,6 +22,17 @@
         .panel-body {
             padding: 15px 5px;
         }
+        .dt-buttons { float: right; }
+        .dt-buttons button {
+            outline: none;
+            background: #f3f3f3;
+            border-color: #ddd;
+            border: 1px solid #999;
+            color: black;
+            border-radius: 2px;
+            height: 30px;
+            padding: 3px 8px;
+        }
     </style>
 @endpush
 
@@ -180,7 +191,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
         var table = $('#kt_table_1').DataTable({
             responsive: true,
             // Pagination settings
-            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'TCf>>
+            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'BCf>>
             <'row'<'col-sm-12't>>
             <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
@@ -258,6 +269,24 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     render: function(data, type, full, meta) {
                         return `<label class="i-checks"><input type="checkbox" name="check_job[]" value="`+data+`"><i></i></label><a href="job/edit/`+data+`" class="btn btn-primary btn_inline">View</a>`;
                     },
+                },
+                {
+                    targets: 15,
+                    render: function(data, type, full, meta) {
+                        if( data != null ) {
+                            return '<p class="m-0" data-toggle="tooltip" data-placement="top" title="'+data+'">'+data.substr(0,15)+' </p>';
+                        }
+                        return '';
+                    }
+                },
+                {
+                    targets: 32,
+                    render: function(data, type, full, meta) {
+                        if( data != null ) {
+                            return data.replace(/,/g, ", ");
+                        }
+                        return '';
+                    }
                 },
                 {
                     targets: 17,
