@@ -104,50 +104,52 @@
             </section>
         </div>
     </div>
-    <div class="table table-responsive">
-        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-            <table class="table colvis-responsive-data-table table-striped dataTable table-bordered table-hover table-checkable" id="kt_table_1">
-                <thead>
-                    <tr>
-                        <th> Actions </th>
-                        <th> Agency Name </th>
-                        <th> Property Manager Name </th>
-                        <th> Landlord </th>
-                        <th> Landlord Contact</th>
-                        <th> Landlord Email </th>
-                        <th> No. </th>
-                        <th> Street </th>
-                        <th> Suburb </th>
-                        <th> State </th>
-                        <th> Postal Code </th>
-                        <th> Key </th>
-                        <th> Country </th>
-                        <th> Area Location </th>
-                        <th> Service Month </th>
-                        <th> Tenant </th>
-                        <th> Contact Details </th>
-                        <th> Status </th>
-                        <th> Location 1 </th>
-                        <th> Type 1 </th>
-                        <th> Exp Date 1 </th>
-                        <th> Location 2 </th>
-                        <th> Type 2 </th>
-                        <th> Exp Date 2 </th>
-                        <th> Location 3 </th>
-                        <th> Type 3 </th>
-                        <th> Exp Date 3 </th>
-                        <th> Location 4 </th>
-                        <th> Type 4 </th>
-                        <th> Exp Date 4 </th>
-                        <th> Comments </th>
-                        <th> Service Plan </th>
-                        <th> Services </th>
-                        <th> Last Alarm Service Date </th>
-                        <th> Last Heater Service Date </th>
-                        <th> Last Solar Cleaning Service Date </th>
-                    </tr>
-                </thead>
-            </table>
+    <div class="row">
+        <div class="table table-responsive">
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <table class="table colvis-responsive-data-table table-striped dataTable table-bordered table-hover table-checkable" id="kt_table_1">
+                    <thead>
+                        <tr>
+                            <th> Actions </th>
+                            <th> Agency Name </th>
+                            <th> Property Manager Name </th>
+                            <th> Landlord </th>
+                            <th> Landlord Contact</th>
+                            <th> Landlord Email </th>
+                            <th> No. </th>
+                            <th> Street </th>
+                            <th> Suburb </th>
+                            <th> State </th>
+                            <th> Postal Code </th>
+                            <th> Key </th>
+                            <th> Country </th>
+                            <th> Area Location </th>
+                            <th> Service Month </th>
+                            <th> Tenant </th>
+                            <th> Contact Details </th>
+                            <th> Status </th>
+                            <th> Location 1 </th>
+                            <th> Type 1 </th>
+                            <th> Exp Date 1 </th>
+                            <th> Location 2 </th>
+                            <th> Type 2 </th>
+                            <th> Exp Date 2 </th>
+                            <th> Location 3 </th>
+                            <th> Type 3 </th>
+                            <th> Exp Date 3 </th>
+                            <th> Location 4 </th>
+                            <th> Type 4 </th>
+                            <th> Exp Date 4 </th>
+                            <th> Comments </th>
+                            <th> Service Plan </th>
+                            <th> Services </th>
+                            <th> Last Alarm Service Date </th>
+                            <th> Last Heater Service Date </th>
+                            <th> Last Solar Cleaning Service Date </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
     <button class="btn btn-success" id="update_status">Reset Status</button>
@@ -184,9 +186,9 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
         var table = $('#kt_table_1').DataTable({
             responsive: false,
             // Pagination settings
-            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'BCf>>
-            <'row'<'col-sm-12't>>
-            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
+            dom: `<<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'BCf>>
+            <<'col-sm-12't>>
+            <<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
             buttons: [
                 {

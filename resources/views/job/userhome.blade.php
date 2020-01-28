@@ -103,124 +103,126 @@
             </section>
         </div>
     </div>
-    <div class="table table-responsive">
-        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-            <table class="table colvis-responsive-data-table table-striped dataTable table-bordered table-hover table-checkable" id="kt_table_1">
-                <thead>
-                    <tr>
-                        <th> Actions </th>
-                        <th> Property Manager Name </th>
-                        <th> Landlord </th>
-                        <th> Landlord Contact</th>
-                        <th> Landlord Email </th>
-                        <th> No. </th>
-                        <th> Street </th>
-                        <th> Suburb </th>
-                        <th> State </th>
-                        <th> Postal Code </th>
-                        <th> Key </th>
-                        <th> Country </th>
-                        <th> Area Location </th>
-                        <th> Service Month </th>
-                        <th> Tenant </th>
-                        <th> Contact Details </th>
-                        <th> Status </th>
-                        <th> Location 1 </th>
-                        <th> Type 1 </th>
-                        <th> Exp Date 1 </th>
-                        <th> Location 2 </th>
-                        <th> Type 2 </th>
-                        <th> Exp Date 2 </th>
-                        <th> Location 3 </th>
-                        <th> Type 3 </th>
-                        <th> Exp Date 3 </th>
-                        <th> Location 4 </th>
-                        <th> Type 4 </th>
-                        <th> Exp Date 4 </th>
-                        <th> Comments </th>
-                        <th> Service Plan </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @isset($clonedJobs)
-                    @foreach($clonedJobs as $job)
-                    <tr>
-                        <td>
-                            <a href="{{ route('jobEdit', ['id' => $job->job_id]) }}" class="btn btn-primary btn_inline">View</a>
-                        </td>
-                        <td> {{ $job->property_manager_name }} </td>
-                        <td> {{ $job->landlord }} </td>
-                        <td> {{ $job->landlord_contact }} </td>
-                        <td> {{ $job->landlord_email }} </td>
-                        <td> {{ $job->address_line_1 }} </td>
-                        <td> {{ $job->address_line_2 }} </td>
-                        <td> {{ $job->city }} </td>
-                        <td> {{ $job->state }} </td>
-                        <td> {{ $job->postal_code }} </td>
-                        <td> {{ $job->key }} </td>
-                        <td> {{ $job->country }} </td>
-                        <td> {{ $job->location_area }} </td>
-                        <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
-                        <td> {{ $job->tenant }} </td>
-                        <td> {{ $job->contact_details }} </td>
-                        <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
-                        <td> {{ $job->loc_custom_field_1 }} </td>
-                        <td> {{ $job->t_custom_field_1 }} </td>
-                        <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : ''}} </td>
-                        <td> {{ $job->loc_custom_field_2 }} </td>
-                        <td> {{ $job->t_custom_field_2 }} </td>
-                        <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : ''}} </td>
-                        <td> {{ $job->loc_custom_field_3 }} </td>
-                        <td> {{ $job->t_custom_field_3 }} </td>
-                        <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : ''}} </td>
-                        <td> {{ $job->loc_custom_field_4 }} </td>
-                        <td> {{ $job->t_custom_field_4 }} </td>
-                        <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : ''}} </td>
-                        <td> {{ $job->comments }} </td>
-                        <td> {{ $job->service_plan }} </td>
-                    </tr>
-                    @endforeach
-                    @endisset
+    <div class="row">
+        <div class="table table-responsive">
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <table class="table colvis-responsive-data-table table-striped dataTable table-bordered table-hover table-checkable" id="kt_table_1">
+                    <thead>
+                        <tr>
+                            <th> Actions </th>
+                            <th> Property Manager Name </th>
+                            <th> Landlord </th>
+                            <th> Landlord Contact</th>
+                            <th> Landlord Email </th>
+                            <th> No. </th>
+                            <th> Street </th>
+                            <th> Suburb </th>
+                            <th> State </th>
+                            <th> Postal Code </th>
+                            <th> Key </th>
+                            <th> Country </th>
+                            <th> Area Location </th>
+                            <th> Service Month </th>
+                            <th> Tenant </th>
+                            <th> Contact Details </th>
+                            <th> Status </th>
+                            <th> Location 1 </th>
+                            <th> Type 1 </th>
+                            <th> Exp Date 1 </th>
+                            <th> Location 2 </th>
+                            <th> Type 2 </th>
+                            <th> Exp Date 2 </th>
+                            <th> Location 3 </th>
+                            <th> Type 3 </th>
+                            <th> Exp Date 3 </th>
+                            <th> Location 4 </th>
+                            <th> Type 4 </th>
+                            <th> Exp Date 4 </th>
+                            <th> Comments </th>
+                            <th> Service Plan </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @isset($clonedJobs)
+                        @foreach($clonedJobs as $job)
+                        <tr>
+                            <td>
+                                <a href="{{ route('jobEdit', ['id' => $job->job_id]) }}" class="btn btn-primary btn_inline">View</a>
+                            </td>
+                            <td> {{ $job->property_manager_name }} </td>
+                            <td> {{ $job->landlord }} </td>
+                            <td> {{ $job->landlord_contact }} </td>
+                            <td> {{ $job->landlord_email }} </td>
+                            <td> {{ $job->address_line_1 }} </td>
+                            <td> {{ $job->address_line_2 }} </td>
+                            <td> {{ $job->city }} </td>
+                            <td> {{ $job->state }} </td>
+                            <td> {{ $job->postal_code }} </td>
+                            <td> {{ $job->key }} </td>
+                            <td> {{ $job->country }} </td>
+                            <td> {{ $job->location_area }} </td>
+                            <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
+                            <td> {{ $job->tenant }} </td>
+                            <td> {{ $job->contact_details }} </td>
+                            <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
+                            <td> {{ $job->loc_custom_field_1 }} </td>
+                            <td> {{ $job->t_custom_field_1 }} </td>
+                            <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : ''}} </td>
+                            <td> {{ $job->loc_custom_field_2 }} </td>
+                            <td> {{ $job->t_custom_field_2 }} </td>
+                            <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : ''}} </td>
+                            <td> {{ $job->loc_custom_field_3 }} </td>
+                            <td> {{ $job->t_custom_field_3 }} </td>
+                            <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : ''}} </td>
+                            <td> {{ $job->loc_custom_field_4 }} </td>
+                            <td> {{ $job->t_custom_field_4 }} </td>
+                            <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : ''}} </td>
+                            <td> {{ $job->comments }} </td>
+                            <td> {{ $job->service_plan }} </td>
+                        </tr>
+                        @endforeach
+                        @endisset
 
-                    @foreach($jobs as $job)
-                    <tr>
-                        <td>
-                            <a href="{{ route('jobEdit', ['id' => $job->id]) }}" class="btn btn-primary btn_inline">View</a>
-                        </td>
-                        <td> {{ $job->property_manager_name }} </td>
-                        <td> {{ $job->landlord }} </td>
-                        <td> {{ $job->landlord_contact }} </td>
-                        <td> {{ $job->landlord_email }} </td>
-                        <td> {{ $job->address_line_1 }} </td>
-                        <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->address_line_2}}">{{ Illuminate\Support\Str::limit($job->address_line_2, 20) }}</p> </td>
-                        <td> {{ $job->city }} </td>
-                        <td> {{ $job->state }} </td>
-                        <td> {{ $job->postal_code }} </td>
-                        <td> {{ $job->key }} </td>
-                        <td> {{ $job->country }} </td>
-                        <td> {{ $job->location_area }} </td>
-                        <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
-                        <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->tenant}}">{{ Illuminate\Support\Str::limit($job->tenant, 15) }} </p></td>
-                        <td> {{ $job->contact_details }} </td>
-                        <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
-                        <td> {{ $job->loc_custom_field_1 }} </td>
-                        <td> {{ $job->t_custom_field_1 }} </td>
-                        <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>
-                        <td> {{ $job->loc_custom_field_2 }} </td>
-                        <td> {{ $job->t_custom_field_2 }} </td>
-                        <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : '' }} </td>
-                        <td> {{ $job->loc_custom_field_3 }} </td>
-                        <td> {{ $job->t_custom_field_3 }} </td>
-                        <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : '' }} </td>
-                        <td> {{ $job->loc_custom_field_4 }} </td>
-                        <td> {{ $job->t_custom_field_4 }} </td>
-                        <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : '' }} </td>
-                        <td> {{ $job->comments }} </td>
-                        <td> {{ $job->service_plan }} </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @foreach($jobs as $job)
+                        <tr>
+                            <td>
+                                <a href="{{ route('jobEdit', ['id' => $job->id]) }}" class="btn btn-primary btn_inline">View</a>
+                            </td>
+                            <td> {{ $job->property_manager_name }} </td>
+                            <td> {{ $job->landlord }} </td>
+                            <td> {{ $job->landlord_contact }} </td>
+                            <td> {{ $job->landlord_email }} </td>
+                            <td> {{ $job->address_line_1 }} </td>
+                            <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->address_line_2}}">{{ Illuminate\Support\Str::limit($job->address_line_2, 20) }}</p> </td>
+                            <td> {{ $job->city }} </td>
+                            <td> {{ $job->state }} </td>
+                            <td> {{ $job->postal_code }} </td>
+                            <td> {{ $job->key }} </td>
+                            <td> {{ $job->country }} </td>
+                            <td> {{ $job->location_area }} </td>
+                            <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
+                            <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->tenant}}">{{ Illuminate\Support\Str::limit($job->tenant, 15) }} </p></td>
+                            <td> {{ $job->contact_details }} </td>
+                            <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
+                            <td> {{ $job->loc_custom_field_1 }} </td>
+                            <td> {{ $job->t_custom_field_1 }} </td>
+                            <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>
+                            <td> {{ $job->loc_custom_field_2 }} </td>
+                            <td> {{ $job->t_custom_field_2 }} </td>
+                            <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : '' }} </td>
+                            <td> {{ $job->loc_custom_field_3 }} </td>
+                            <td> {{ $job->t_custom_field_3 }} </td>
+                            <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : '' }} </td>
+                            <td> {{ $job->loc_custom_field_4 }} </td>
+                            <td> {{ $job->t_custom_field_4 }} </td>
+                            <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : '' }} </td>
+                            <td> {{ $job->comments }} </td>
+                            <td> {{ $job->service_plan }} </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -252,9 +254,9 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
         var table = $('#kt_table_1').DataTable({
             responsive: false,
             // Pagination settings
-            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'BCf>>
-            <'row'<'col-sm-12't>>
-            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
+            dom: `<<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'BCf>>
+            <<'col-sm-12't>>
+            <<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'p>>`,
             // read more: https://datatables.net/examples/basic_init/dom.html
             buttons: [
                 {
