@@ -142,6 +142,7 @@
         <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <!-- Scripts -->
+        <script src="{{ asset('dist/js/moment.js') }}"></script>
         <script src="{{ asset('dist/js/modernizr-custom.js') }}"></script>
         <script src="{{ asset('bower_components/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
         <script src="{{ asset('bower_components/autosize/dist/autosize.min.js') }}"></script>

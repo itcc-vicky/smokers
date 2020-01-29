@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call('\App\Http\Controllers\JobController@cronUpdateBookingStatus')->name('cronUpdateBookingStatus')->withoutOverlapping(60)->daily()->onOneServer();
     }
 
     /**

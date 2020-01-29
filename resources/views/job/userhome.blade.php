@@ -6,24 +6,6 @@
     <link href="{{ asset('bower_components/datatables-colvis/css/dataTables.colVis.css') }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-scroller/css/scroller.dataTables.scss') }}" rel="stylesheet">
-    <style>
-        table.dataTable tbody td {word-break: break-word !important;vertical-align: top;}
-        .i-checks { margin:0; }
-        .i-checks > i { width: 15px !important; height: 15px !important;margin-right: 10px !important;}
-        .btn_inline { padding: 2px 10px !important; }
-        .table { width: 100% !important; }
-        .label { color: #626262;}
-        div.ColVis { margin: 0 10px;}
-        button.ColVis_Button.ColVis_MasterButton { background: #4aa9e9 !important; color: #FFF !important; border-color: #4aa9e9 !important; }
-        .buttons-print { background: #62549a !important; color: #FFF !important; border-color: #62549a !important; }
-        table.dataTable tbody td { word-break: break-word !important; vertical-align: top; }
-        table.dataTable tbody th, table.dataTable tbody td { padding: 4px 7px; font-size: 13px; }
-        table.dataTable thead th, table.dataTable tfoot th { font-weight: 600; font-size: 13px; }
-        .panel-body { padding: 15px 5px; }
-        .dt-buttons { float: right; }
-        .dt-buttons button { outline: none; background: #f3f3f3; border-color: #ddd; border: 1px solid #999; color: black; border-radius: 2px; height: 30px; padding: 3px 8px; }
-        .dataTables_wrapper .dataTables_info { padding-top: 10px !important; }
-    </style>
 @endpush
 
 
@@ -33,7 +15,7 @@
     <div class="row">
         <div class="col-md-8">
             <h1 class="page-title">
-                @if(request()->route()->getName() == 'job') Jobs @endif
+                @if(request()->route()->getName() == 'job') Job Lists @endif
                 @if(request()->route()->getName() == 'jobPending') Pending Jobs @endif
                 @if(request()->route()->getName() == 'jobDeleted') Deleted Jobs @endif
 
@@ -44,7 +26,7 @@
             <ul class="breadcrumb pull-right">
                 <li><a href="/">Home</a></li>
                 <li><a href="javascript:void(0)" class="active">
-                @if(request()->route()->getName() == 'job') Jobs @endif
+                @if(request()->route()->getName() == 'job') Job Lists @endif
                 @if(request()->route()->getName() == 'jobPending') Pending Jobs @endif
                 @if(request()->route()->getName() == 'jobDeleted') Deleted Jobs @endif
                 </a></li>
@@ -161,22 +143,22 @@
                             <td> {{ $job->key }} </td>
                             <td> {{ $job->country }} </td>
                             <td> {{ $job->location_area }} </td>
-                            <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
+                            <td class="{{ $job->service_month == 'NA' ? 'bg-red' : '' }}">{{ $job->service_month }}</td>
                             <td> {{ $job->tenant }} </td>
                             <td> {{ $job->contact_details }} </td>
-                            <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
+                            <td class="{{ $job->status == 'Compliant' ? 'bg-green' : '' }} {{ $job->status == 'Quoted' ? 'bg-orange' : '' }} {{ $job->status == 'Booked In' ? 'bg-blue' : '' }} {{ $job->status == 'Overdue' ? 'bg-red' : '' }} {{ $job->status == 'On Hold' ? 'bg-purple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }}@endif </td>
                             <td> {{ $job->loc_custom_field_1 }} </td>
                             <td> {{ $job->t_custom_field_1 }} </td>
-                            <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : ''}} </td>
+                            <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : ''}} </td>
                             <td> {{ $job->loc_custom_field_2 }} </td>
                             <td> {{ $job->t_custom_field_2 }} </td>
-                            <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : ''}} </td>
+                            <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : ''}} </td>
                             <td> {{ $job->loc_custom_field_3 }} </td>
                             <td> {{ $job->t_custom_field_3 }} </td>
-                            <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : ''}} </td>
+                            <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : ''}} </td>
                             <td> {{ $job->loc_custom_field_4 }} </td>
                             <td> {{ $job->t_custom_field_4 }} </td>
-                            <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : ''}} </td>
+                            <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : ''}} </td>
                             <td> {{ $job->comments }} </td>
                             <td> {{ $job->service_plan }} </td>
                         </tr>
@@ -200,22 +182,22 @@
                             <td> {{ $job->key }} </td>
                             <td> {{ $job->country }} </td>
                             <td> {{ $job->location_area }} </td>
-                            <td><span class="{{ $job->service_month == 'NA' ? 'label bg-danger' : '' }}">{{ $job->service_month }}</span>  </td>
+                            <td class="{{ $job->service_month == 'NA' ? 'bg-red' : '' }}">{{ $job->service_month }}</td>
                             <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->tenant}}">{{ Illuminate\Support\Str::limit($job->tenant, 15) }} </p></td>
                             <td> {{ $job->contact_details }} </td>
-                            <td> <span class="badge {{ $job->status == 'Compliant' ? 'bg-lightgreen' : '' }} {{ $job->status == 'Quoted' ? 'bg-lightorange' : '' }} {{ $job->status == 'Booked In' ? 'bg-lightblue' : '' }} {{ $job->status == 'Overdue' ? 'bg-lightred' : '' }} {{ $job->status == 'On Hold' ? 'bg-lightpurple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br><span class="badge  bg-lightblue">{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }} </span>@endif </td>
+                            <td class="{{ $job->status == 'Compliant' ? 'bg-green' : '' }} {{ $job->status == 'Quoted' ? 'bg-orange' : '' }} {{ $job->status == 'Booked In' ? 'bg-blue' : '' }} {{ $job->status == 'Overdue' ? 'bg-red' : '' }} {{ $job->status == 'On Hold' ? 'bg-purple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }}@endif </td>
                             <td> {{ $job->loc_custom_field_1 }} </td>
                             <td> {{ $job->t_custom_field_1 }} </td>
-                            <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>
+                            <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>
                             <td> {{ $job->loc_custom_field_2 }} </td>
                             <td> {{ $job->t_custom_field_2 }} </td>
-                            <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : '' }} </td>
+                            <td class="{{ $job->exp_custom_field_2 != '' && \Carbon\Carbon::parse($job->exp_custom_field_2)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_2 != null ? \Carbon\Carbon::parse($job->exp_custom_field_2)->format('d M Y') : '' }} </td>
                             <td> {{ $job->loc_custom_field_3 }} </td>
                             <td> {{ $job->t_custom_field_3 }} </td>
-                            <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : '' }} </td>
+                            <td class="{{ $job->exp_custom_field_3 != '' && \Carbon\Carbon::parse($job->exp_custom_field_3)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_3 != null ? \Carbon\Carbon::parse($job->exp_custom_field_3)->format('d M Y') : '' }} </td>
                             <td> {{ $job->loc_custom_field_4 }} </td>
                             <td> {{ $job->t_custom_field_4 }} </td>
-                            <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-danger' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : '' }} </td>
+                            <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : '' }} </td>
                             <td> {{ $job->comments }} </td>
                             <td> {{ $job->service_plan }} </td>
                         </tr>
@@ -279,7 +261,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             language: {
                 'lengthMenu': 'Display _MENU_',
             },
-            lengthMenu: [5, 10, 25, 50],
+            lengthMenu: [5, 10, 50, 100],
             pageLength: 50,
             bServerSide:false,
             searchDelay: 1000,

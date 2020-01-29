@@ -60,6 +60,8 @@ class JobController extends Controller
                 $_sort_type = $_sort_field_data['dir'];
                 $_filed_name_val = $columns[$_filed_name]['data'];
                 $jobs->orderBy($_filed_name_val, $_sort_type);
+            }else{
+                $jobs->latest();
             }
             $globalSearch = array();
             $columnSearch = array();
@@ -687,6 +689,21 @@ class JobController extends Controller
         $response['title'] = 'Job Status Updated Successfully..!';
         $response['message'] = '';
         return response()->json($response);
+    }
+
+
+    public function cronUpdateBookingStatus()
+    {
+        $jobs = AgencyJobs::where('status','Booked In')->get();
+        foreach ($jobs as $key => $job) {
+            if($job->booked_date != null){
+                $date = Carbon::parse($job->booked_date);
+                if(!$date->isToday() && !$date->isFuture()){
+                    $job->status = 'Overdue';
+                    $job->save();
+                }
+            }
+        }
     }
 }
 

@@ -5,30 +5,6 @@
     <link href="{{ asset('bower_components/datatables-colvis/css/dataTables.colVis.css') }}" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.css" rel="stylesheet">
     <link href="{{ asset('bower_components/datatables-scroller/css/scroller.dataTables.scss') }}" rel="stylesheet">
-    <style>
-        table.dataTable tbody td {word-break: break-word !important;vertical-align: top;}
-        .i-checks { margin:0; }
-        .i-checks > i { width: 15px !important; height: 15px !important;margin-right: 10px !important;}
-        .btn_inline { padding: 2px 10px !important; }
-        .table { width: 100% !important; }
-        .label { color: #626262;}
-        div.ColVis { margin: 0 10px;}
-        button.ColVis_Button.ColVis_MasterButton { background: #4aa9e9 !important; color: #FFF !important; border-color: #4aa9e9 !important; }
-        .buttons-print { background: #62549a !important; color: #FFF !important; border-color: #62549a !important; }
-        table.dataTable tbody td { word-break: break-word !important; vertical-align: top; }
-        table.dataTable tbody th, table.dataTable tbody td { padding: 4px 7px; font-size: 13px; }
-        table.dataTable thead th, table.dataTable tfoot th { font-weight: 600; font-size: 13px; }
-        .panel-body { padding: 15px 5px; }
-        .dt-buttons { float: right; }
-        .dt-buttons button { outline: none; background: #f3f3f3; border-color: #ddd; border: 1px solid #999; color: black; border-radius: 2px; height: 30px; padding: 3px 8px; }
-        .dataTables_wrapper .dataTables_info { padding-top: 10px !important; }
-        .text-success {
-            color: #ff6c60 !important;
-        }
-        .text-danger {
-            color: #23b9a9 !important;
-        }
-    </style>
 @endpush
 
 
@@ -163,7 +139,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             language: {
                 'lengthMenu': 'Display _MENU_',
             },
-            lengthMenu: [5, 10, 25, 50],
+            lengthMenu: [5, 10, 50, 100],
 
             pageLength: 50,
             bServerSide:true,
@@ -239,11 +215,11 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     targets:17,
                     render: function(data, type, full, meta) {
                         var status = {
-                            'Compliant' : {'title': 'Compliant', 'class': 'bg-lightgreen'},
-                            'Quoted' : {'title': 'Quoted', 'class': ' bg-lightorange'},
-                            'Booked In' : {'title': 'Booked In', 'class': ' bg-lightblue'},
-                            'Overdue' : {'title': 'Overdue', 'class': ' bg-lightred'},
-                            'On Hold' : {'title': 'On Hold', 'class': ' bg-lightpurple'}
+                            'Compliant' : {'title': 'Compliant', 'class': 'bg-green'},
+                            'Quoted' : {'title': 'Quoted', 'class': ' bg-orange'},
+                            'Booked In' : {'title': 'Booked In', 'class': ' bg-blue'},
+                            'Overdue' : {'title': 'Overdue', 'class': ' bg-red'},
+                            'On Hold' : {'title': 'On Hold', 'class': ' bg-purple'}
                         };
                         // console.log(data);
                         // console.log(full.original_job.status);
@@ -387,7 +363,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     targets:14,
                     render: function(data, type, full, meta) {
                         var status = {
-                            'NA' : {'title': 'NA', 'class': 'label bg-danger'},
+                            'NA' : {'title': 'NA', 'class': 'bg-red'},
                             'January' : {'title': 'January', 'class': ''},
                             'February' : {'title': 'February', 'class': ''},
                             'March' : {'title': 'March', 'class': ''},
