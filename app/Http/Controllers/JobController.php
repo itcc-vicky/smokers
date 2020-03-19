@@ -47,7 +47,8 @@ class JobController extends Controller
 
         if(Auth::user()->role == 'admin'){
             $ids = AgencyJobChanges::pluck('job_id');
-            $jobs = AgencyJobs::WhereNotIn('id',$ids)->with('agency');
+            $jobs = AgencyJobs::WhereNotIn('agency_jobs.id',$ids)->with('agency');
+            $jobs->join('users', 'users.id', '=', 'agency_jobs.agency_id')->select('users.name','agency_jobs.*');
             $_total = $jobs->count();
             $value = $columns[17]['search']['value'] ?? '';
             if($value){
@@ -59,7 +60,11 @@ class JobController extends Controller
                 $_filed_name = $_sort_field_data['column'];
                 $_sort_type = $_sort_field_data['dir'];
                 $_filed_name_val = $columns[$_filed_name]['data'];
-                $jobs->orderBy($_filed_name_val, $_sort_type);
+                if($_filed_name_val == 'agency.name'){
+                    $jobs->orderBy('users.name', $_sort_type);
+                }else{
+                    $jobs->orderBy($_filed_name_val, $_sort_type);
+                }
             }else{
                 $jobs->latest();
             }
@@ -70,6 +75,7 @@ class JobController extends Controller
 
             if ( $request->has('search') && $request->get('search')['value'] != '' ) {
                 $str = $request->get('search')['value'];
+                $str = addslashes($str);
 
                 for ( $i=0, $ien=count($columns); $i<$ien; $i++ ) {
                     if( $columns[$i]['data'] != 'id' && $columns[$i]['data'] != 'agency.name') {
@@ -80,8 +86,12 @@ class JobController extends Controller
                         if ( $requestColumn['searchable'] == 'true' ) {
                             // $binding = self::bind( $bindings, '%'.$str.'%', \PDO::PARAM_STR );
                             $binding = "'%".$str."%'";
-                            $globalSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                            $globalSearch[] = "`agency_jobs`.`".$columns[$i]['data']."` LIKE ".$binding;
                         }
+                    }
+                    if($columns[$i]['data'] == 'agency.name'){
+                        $binding = "'%".$str."%'";
+                        $globalSearch[] = "`users`.`name` LIKE ".$binding;
                     }
                 }
             }
@@ -94,6 +104,7 @@ class JobController extends Controller
                     // $column = $columns[ $columnIdx ];
 
                     $str = $requestColumn['search']['value'];
+                    $str = addslashes($str);
 
                     if ( $requestColumn['searchable'] == 'true' &&
                      $str != '' ) {
@@ -172,7 +183,8 @@ class JobController extends Controller
         $length = $request->get('length', 50);
 
 
-        $jobs = AgencyJobChanges::with('agency','originalJob')->latest();
+        $jobs = AgencyJobChanges::with('agency','originalJob');
+        $jobs->join('users', 'users.id', '=', 'agency_job_changes.agency_id')->select('users.name','agency_job_changes.*');
         $_total = $jobs->count();
         $value = $columns[17]['search']['value'] ?? '';
         if($value){
@@ -184,7 +196,13 @@ class JobController extends Controller
             $_filed_name = $_sort_field_data['column'];
             $_sort_type = $_sort_field_data['dir'];
             $_filed_name_val = $columns[$_filed_name]['data'];
-            $jobs->orderBy($_filed_name_val, $_sort_type);
+            if($_filed_name_val == 'agency.name'){
+                $jobs->orderBy('users.name', $_sort_type);
+            }else{
+                $jobs->orderBy($_filed_name_val, $_sort_type);
+            }
+        }else{
+            $jobs->latest();
         }
         $globalSearch = array();
         $columnSearch = array();
@@ -193,6 +211,7 @@ class JobController extends Controller
 
         if ( $request->has('search') && $request->get('search')['value'] != '' ) {
             $str = $request->get('search')['value'];
+            $str = addslashes($str);
 
             for ( $i=0, $ien=count($columns); $i<$ien; $i++ ) {
                 if( $columns[$i]['data'] != 'id' && $columns[$i]['data'] != 'agency.name') {
@@ -203,8 +222,12 @@ class JobController extends Controller
                     if ( $requestColumn['searchable'] == 'true' ) {
                         // $binding = self::bind( $bindings, '%'.$str.'%', \PDO::PARAM_STR );
                         $binding = "'%".$str."%'";
-                        $globalSearch[] = "`".$columns[$i]['data']."` LIKE ".$binding;
+                        $globalSearch[] = "`agency_job_changes`.`".$columns[$i]['data']."` LIKE ".$binding;
                     }
+                }
+                if($columns[$i]['data'] == 'agency.name'){
+                    $binding = "'%".$str."%'";
+                    $globalSearch[] = "`users`.`name` LIKE ".$binding;
                 }
             }
         }
@@ -217,6 +240,7 @@ class JobController extends Controller
                 // $column = $columns[ $columnIdx ];
 
                 $str = $requestColumn['search']['value'];
+                $str = addslashes($str);
 
                 if ( $requestColumn['searchable'] == 'true' &&
                  $str != '' ) {
@@ -308,6 +332,7 @@ class JobController extends Controller
 
         if ( $request->has('search') && $request->get('search')['value'] != '' ) {
             $str = $request->get('search')['value'];
+            $str = addslashes($str);
 
             for ( $i=0, $ien=count($columns); $i<$ien; $i++ ) {
                 if( $columns[$i]['data'] != 'id' && $columns[$i]['data'] != 'agency.name') {
@@ -332,6 +357,7 @@ class JobController extends Controller
                 // $column = $columns[ $columnIdx ];
 
                 $str = $requestColumn['search']['value'];
+                $str = addslashes($str);
 
                 if ( $requestColumn['searchable'] == 'true' &&
                  $str != '' ) {
@@ -694,6 +720,7 @@ class JobController extends Controller
 
     public function cronUpdateBookingStatus()
     {
+        \Log::debug('XXX_XXX_XXX');
         $jobs = AgencyJobs::where('status','Booked In')->get();
         foreach ($jobs as $key => $job) {
             if($job->booked_date != null){

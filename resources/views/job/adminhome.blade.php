@@ -58,37 +58,37 @@
             <section class="panel">
                 <header class="panel-heading panel-border"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                     &nbsp;
-                    <button class="btn btn-default btn-sm" id="kt_reset">
+                    <button class="btn btn-default btn-sm text-center font-bold" id="kt_reset">
                         <span>
                             <i class="la la-search"></i>
                             <span>Show All</span>
                         </span>
                     </button>
-                    <button class="btn btn-default bg-green btn-sm kt_search" value="Compliant">
+                    <button class="btn btn-default bg-green btn-sm kt_search text-center font-bold" value="Compliant">
                         <span>
                             <i class="la la-search"></i>
                             <span>Compliant</span>
                         </span>
                     </button>
-                    <button class="btn btn-default bg-orange btn-sm kt_search" value="Quoted">
+                    <button class="btn btn-default bg-orange btn-sm kt_search text-center font-bold" value="Quoted">
                         <span>
                             <i class="la la-search"></i>
                             <span>Quoted</span>
                         </span>
                     </button>
-                    <button class="btn btn-default bg-blue btn-sm kt_search" value="Booked In">
+                    <button class="btn btn-default bg-blue btn-sm kt_search text-center font-bold" value="Booked In">
                         <span>
                             <i class="la la-search"></i>
                             <span>Booked In</span>
                         </span>
                     </button>
-                    <button class="btn btn-default bg-red btn-sm kt_search" value="Overdue">
+                    <button class="btn btn-default bg-red btn-sm kt_search text-center font-bold" value="Overdue">
                         <span>
                             <i class="la la-search"></i>
                             <span>Overdue</span>
                         </span>
                     </button>
-                    <button class="btn btn-default bg-purple btn-sm kt_search" value="On Hold">
+                    <button class="btn btn-default bg-purple btn-sm kt_search text-center font-bold" value="On Hold">
                         <span>
                             <i class="la la-search"></i>
                             <span>On Hold</span>
@@ -110,9 +110,9 @@
                 <table class="table colvis-responsive-data-table table-striped dataTable table-bordered table-hover table-checkable" id="kt_table_1">
                     <thead>
                         <tr>
-                            <th> Actions </th>
+                            <th></th>
                             <th> Agency Name </th>
-                            <th> Property Manager Name </th>
+                            <th> Property Manager</th>
                             <th> Landlord </th>
                             <th> Landlord Contact</th>
                             <th> Landlord Email </th>
@@ -143,9 +143,10 @@
                             <th> Comments </th>
                             <th> Service Plan </th>
                             <th> Services </th>
-                            <th> Last Alarm Service Date </th>
-                            <th> Last Heater Service Date </th>
-                            <th> Last Solar Cleaning Service Date </th>
+                            <th> Last Alarm Service </th>
+                            <th> Last Heater Service </th>
+                            <th> Last Solar Cleaning Service </th>
+                            <th> Actions </th>
                         </tr>
                     </thead>
                 </table>
@@ -265,6 +266,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 {data: 'last_alarm_service'},
                 {data: 'last_heater_service'},
                 {data: 'last_solar_cleaning_service'},
+                {data: 'id'},
             ],
 
             columnDefs: [
@@ -274,12 +276,24 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 },
                 {
                     targets: 0,
+                    title: '',
+                    orderable: false,
+                    sortable: false,
+                    selector: false,
+                    width:'1%',
+                    render: function(data, type, full, meta) {
+                        return `<label class="i-checks"><input type="checkbox" name="check_job[]" value="`+data+`"><i></i></label>`;
+                    },
+                },
+                {
+                    targets: 36,
                     title: 'Actions',
                     orderable: false,
                     sortable: false,
                     selector: false,
+                    width:'1%',
                     render: function(data, type, full, meta) {
-                        return `<label class="i-checks"><input type="checkbox" name="check_job[]" value="`+data+`"><i></i></label><a href="job/edit/`+data+`" class="btn btn-primary btn_inline">View</a>`;
+                        return `<a href="job/edit/`+data+`" class="btn btn-primary btn_inline">View</a>`;
                     },
                 },
                 {
@@ -291,7 +305,6 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                             }else{
                                 return data;
                             }
-
                         }
                         return '';
                     }
@@ -304,7 +317,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                             if(moment(data).isBefore()){
                                 meta.settings.aoColumns[meta.col].sClass = 'bg-red';
                             }
-                            return moment(data).format('DD MMM Y')
+                            return moment(data).format('DD MMM Y');
                         }else{
                             return data;
                         }
@@ -321,21 +334,22 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 },
                 {
                     targets: 17,
+                    class: '',
                     render: function(data, type, full, meta) {
                         meta.settings.aoColumns[17].sClass = '';
                         var status = {
-                            'Compliant' : {'title': 'Compliant', 'class': 'bg-green'},
-                            'Quoted' : {'title': 'Quoted', 'class': ' bg-orange'},
-                            'Booked In' : {'title': 'Booked In', 'class': ' bg-blue'},
-                            'Overdue' : {'title': 'Overdue', 'class': ' bg-red'},
-                            'On Hold' : {'title': 'On Hold', 'class': ' bg-purple'}
+                            'Compliant' : {'title': 'Compliant', 'class': 'text-center font-bold bg-green'},
+                            'Quoted' : {'title': 'Quoted', 'class': ' text-center font-bold bg-orange'},
+                            'Booked In' : {'title': 'Booked In', 'class': ' text-center font-bold bg-blue'},
+                            'Overdue' : {'title': 'Overdue', 'class': ' text-center font-bold bg-red'},
+                            'On Hold' : {'title': 'On Hold', 'class': ' text-center font-bold bg-purple'}
                         };
                         if (typeof status[data] === 'undefined') {
                             return data;
                         }
                         meta.settings.aoColumns[17].sClass = status[data].class;
-                        if (data == 'Booked In') {
-                            return status[data].title+'<br>'+full.booked_date;
+                        if ((data == 'Booked In' || data == 'Overdue') && full.booked_date != '') {
+                            return status[data].title+'<br>\n'+full.booked_date;
                         }else{
                             return status[data].title;
                         }
@@ -343,7 +357,6 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 },
                 {
                     targets: 14,
-                    width:'10%',
                     render: function(data, type, full, meta) {
                         var status = {
                             'NA' : {'title': 'NA', 'class': 'bg-red'},

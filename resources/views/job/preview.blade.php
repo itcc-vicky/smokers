@@ -3,13 +3,13 @@
 <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')}}">
 <link rel="stylesheet" href="{{ asset('bower_components/select2/dist/css/select2.min.css')}}">
 <style>
-
-.text-success {
+.panel-body { padding: 15px; }
+/*.text-success {
     color: #ff6c60 !important;
 }
 .text-danger {
     color: #23b9a9 !important;
-}
+}*/
 
 </style>
     <!--page title and breadcrumb start -->

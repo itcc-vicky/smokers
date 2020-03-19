@@ -40,40 +40,40 @@
             <section class="panel">
                 <header class="panel-heading panel-border"><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
                     &nbsp;
-                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Compliant">
+                    <button class="btn btn-default btn-sm text-center font-bold" id="kt_reset">
+                        <span>
+                            <i class="la la-search"></i>
+                            <span>Show All</span>
+                        </span>
+                    </button>
+                    <button class="btn btn-default bg-green btn-sm kt_search text-center font-bold" value="Compliant">
                         <span>
                             <i class="la la-search"></i>
                             <span>Compliant</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Quoted">
+                    <button class="btn btn-default bg-orange btn-sm kt_search text-center font-bold" value="Quoted">
                         <span>
                             <i class="la la-search"></i>
                             <span>Quoted</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Booked In">
+                    <button class="btn btn-default bg-blue btn-sm kt_search text-center font-bold" value="Booked In">
                         <span>
                             <i class="la la-search"></i>
                             <span>Booked In</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="Overdue">
+                    <button class="btn btn-default bg-red btn-sm kt_search text-center font-bold" value="Overdue">
                         <span>
                             <i class="la la-search"></i>
                             <span>Overdue</span>
                         </span>
                     </button>
-                    <button class="btn btn-primary btn-sm btn-brand--icon kt_search" value="On Hold">
+                    <button class="btn btn-default bg-purple btn-sm kt_search text-center font-bold" value="On Hold">
                         <span>
                             <i class="la la-search"></i>
                             <span>On Hold</span>
-                        </span>
-                    </button>
-                    <button class="btn btn-primary btn-sm btn-brand--icon" id="kt_reset">
-                        <span>
-                            <i class="la la-search"></i>
-                            <span>Reset</span>
                         </span>
                     </button>
                     <span class="pull-right">
@@ -91,7 +91,6 @@
                 <table class="table colvis-responsive-data-table table-striped dataTable table-bordered table-hover table-checkable" id="kt_table_1">
                     <thead>
                         <tr>
-                            <th> Actions </th>
                             <th> Property Manager Name </th>
                             <th> Landlord </th>
                             <th> Landlord Contact</th>
@@ -122,15 +121,13 @@
                             <th> Exp Date 4 </th>
                             <th> Comments </th>
                             <th> Service Plan </th>
+                            <th> Actions </th>
                         </tr>
                     </thead>
                     <tbody>
                         @isset($clonedJobs)
                         @foreach($clonedJobs as $job)
                         <tr>
-                            <td>
-                                <a href="{{ route('jobEdit', ['id' => $job->job_id]) }}" class="btn btn-primary btn_inline">View</a>
-                            </td>
                             <td> {{ $job->property_manager_name }} </td>
                             <td> {{ $job->landlord }} </td>
                             <td> {{ $job->landlord_contact }} </td>
@@ -146,7 +143,7 @@
                             <td class="{{ $job->service_month == 'NA' ? 'bg-red' : '' }}">{{ $job->service_month }}</td>
                             <td> {{ $job->tenant }} </td>
                             <td> {{ $job->contact_details }} </td>
-                            <td class="{{ $job->status == 'Compliant' ? 'bg-green' : '' }} {{ $job->status == 'Quoted' ? 'bg-orange' : '' }} {{ $job->status == 'Booked In' ? 'bg-blue' : '' }} {{ $job->status == 'Overdue' ? 'bg-red' : '' }} {{ $job->status == 'On Hold' ? 'bg-purple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }}@endif </td>
+                            <td class="text-center font-bold {{ $job->status == 'Compliant' ? 'bg-green' : '' }} {{ $job->status == 'Quoted' ? 'bg-orange' : '' }} {{ $job->status == 'Booked In' ? 'bg-blue' : '' }} {{ $job->status == 'Overdue' ? 'bg-red' : '' }} {{ $job->status == 'On Hold' ? 'bg-purple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }}@endif </td>
                             <td> {{ $job->loc_custom_field_1 }} </td>
                             <td> {{ $job->t_custom_field_1 }} </td>
                             <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : ''}} </td>
@@ -161,15 +158,15 @@
                             <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : ''}} </td>
                             <td> {{ $job->comments }} </td>
                             <td> {{ $job->service_plan }} </td>
+                            <td>
+                                <a href="{{ route('jobEdit', ['id' => $job->job_id]) }}" class="btn btn-primary btn_inline">View</a>
+                            </td>
                         </tr>
                         @endforeach
                         @endisset
 
                         @foreach($jobs as $job)
                         <tr>
-                            <td>
-                                <a href="{{ route('jobEdit', ['id' => $job->id]) }}" class="btn btn-primary btn_inline">View</a>
-                            </td>
                             <td> {{ $job->property_manager_name }} </td>
                             <td> {{ $job->landlord }} </td>
                             <td> {{ $job->landlord_contact }} </td>
@@ -185,7 +182,7 @@
                             <td class="{{ $job->service_month == 'NA' ? 'bg-red' : '' }}">{{ $job->service_month }}</td>
                             <td> <p class="m-0" data-toggle="tooltip" data-placement="top" title="{{$job->tenant}}">{{ Illuminate\Support\Str::limit($job->tenant, 15) }} </p></td>
                             <td> {{ $job->contact_details }} </td>
-                            <td class="{{ $job->status == 'Compliant' ? 'bg-green' : '' }} {{ $job->status == 'Quoted' ? 'bg-orange' : '' }} {{ $job->status == 'Booked In' ? 'bg-blue' : '' }} {{ $job->status == 'Overdue' ? 'bg-red' : '' }} {{ $job->status == 'On Hold' ? 'bg-purple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }}@endif </td>
+                            <td class="text-center font-bold {{ $job->status == 'Compliant' ? 'bg-green' : '' }} {{ $job->status == 'Quoted' ? 'bg-orange' : '' }} {{ $job->status == 'Booked In' ? 'bg-blue' : '' }} {{ $job->status == 'Overdue' ? 'bg-red' : '' }} {{ $job->status == 'On Hold' ? 'bg-purple' : '' }}">{{ $job->status }}</span> @if($job->status == 'Booked In')<br>{{ $job->booked_date != null ? \Carbon\Carbon::parse($job->booked_date)->format('d M Y') : '' }}@endif </td>
                             <td> {{ $job->loc_custom_field_1 }} </td>
                             <td> {{ $job->t_custom_field_1 }} </td>
                             <td class="{{ $job->exp_custom_field_1 != '' && \Carbon\Carbon::parse($job->exp_custom_field_1)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_1 != null ? \Carbon\Carbon::parse($job->exp_custom_field_1)->format('d M Y') : '' }} </td>
@@ -200,6 +197,9 @@
                             <td class="{{ $job->exp_custom_field_4 != '' && \Carbon\Carbon::parse($job->exp_custom_field_4)->isPast() ? 'bg-red' : ''}}"> {{ $job->exp_custom_field_4 != null ? \Carbon\Carbon::parse($job->exp_custom_field_4)->format('d M Y') : '' }} </td>
                             <td> {{ $job->comments }} </td>
                             <td> {{ $job->service_plan }} </td>
+                            <td>
+                                <a href="{{ route('jobEdit', ['id' => $job->id]) }}" class="btn btn-primary btn_inline">View</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -214,8 +214,7 @@
 @push('scripts')
 
 <script>
-    window._table_targets = [ 1,2,3,4,9,11,12,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30 ];
-    // window._table_targets = [ 2,3,4,5,10,12,13,16,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 ];
+    window._table_targets = [ 0,1,2,3,8,10,11,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29 ];
 </script>
 
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -272,6 +271,12 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
             columnDefs: [{
                 targets: window._table_targets,
                 visible: false,
+            },{
+                    targets: 30,
+                    orderable: false,
+                    sortable: false,
+                    selector: false,
+                    width:'4%',
             }],
         });
 
@@ -288,15 +293,15 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
         $('.kt_search').on('click', function(e) {
             e.preventDefault();
             let status = $(this).attr('value');
-            console.log(table.column(16));
-            table.column(16).search(status, false, false);
+            console.log(table.column(15));
+            table.column(15).search(status, false, false);
             table.table().draw();
 
         });
 
         $('#kt_reset').on('click', function(e) {
             e.preventDefault();
-            table.column(16).search('', false, false);
+            table.column(15).search('', false, false);
             table.table().draw();
         });
 

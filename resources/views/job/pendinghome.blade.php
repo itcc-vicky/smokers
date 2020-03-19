@@ -39,7 +39,6 @@
                     <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
                         <thead>
                             <tr>
-                                <th> Actions </th>
                                 <th> Agency Name </th>
                                 <th> Property Manager Name </th>
                                 <th> Landlord </th>
@@ -72,9 +71,10 @@
                                 <th> Comments </th>
                                 <th> Service Plan </th>
                                 <th> Services </th>
-                                <th> Last Alarm Service Date </th>
-                                <th> Last Heater Service Date </th>
-                                <th> Last Solar Cleaning Service Date </th>
+                                <th> Last Alarm Service </th>
+                                <th> Last Heater Service </th>
+                                <th> Last Solar Cleaning Service </th>
+                                <th> Actions </th>
                             </tr>
                         </thead>
                     </table>
@@ -89,7 +89,7 @@
 @push('scripts')
 
 <script>
-    window._table_targets = [ 2,3,4,5,10,12,13,16,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 ];
+    window._table_targets = [ 1,2,3,4,9,11,12,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34 ];
 </script>
 
 
@@ -158,7 +158,6 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 dataSrc: 'jobs',
             },
             columns: [
-                {data: 'id'},
                 {data: 'agency.name'},
                 {data: 'property_manager_name'},
                 {data: 'landlord'},
@@ -194,6 +193,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 {data: 'last_alarm_service'},
                 {data: 'last_heater_service'},
                 {data: 'last_solar_cleaning_service'},
+                {data: 'id'},
             ],
 
             columnDefs: [
@@ -202,7 +202,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     visible: false,
                 },
                 {
-                    targets: 0,
+                    targets: 35,
                     title: 'Actions',
                     orderable: false,
                     sortable: false,
@@ -212,7 +212,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     },
                 },
                 {
-                    targets:17,
+                    targets: 16,
                     render: function(data, type, full, meta) {
                         var status = {
                             'Compliant' : {'title': 'Compliant', 'class': 'bg-green'},
@@ -240,7 +240,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:2,
+                    targets: 1,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.property_manager_name){
                             return data;
@@ -250,7 +250,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:3,
+                    targets: 2,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.landlord){
                             return data;
@@ -260,7 +260,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:4,
+                    targets: 3,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.landlord_contact){
                             return data;
@@ -270,7 +270,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:5,
+                    targets: 4,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.landlord_email){
                             return data;
@@ -280,7 +280,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:6,
+                    targets: 5,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.address_line_1){
                             return data;
@@ -290,7 +290,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:7,
+                    targets: 6,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.address_line_2){
                             return data;
@@ -300,7 +300,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:8,
+                    targets: 7,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.city){
                             return data;
@@ -310,7 +310,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:9,
+                    targets: 8,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.state){
                             return data;
@@ -320,7 +320,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:10,
+                    targets: 9,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.postal_code){
                             return data;
@@ -330,7 +330,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:11,
+                    targets: 10,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.key){
                             return data;
@@ -340,7 +340,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:12,
+                    targets: 11,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.country){
                             return data;
@@ -350,7 +350,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:13,
+                    targets: 12,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.location_area){
                             return data;
@@ -360,7 +360,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:14,
+                    targets: 13,
                     render: function(data, type, full, meta) {
                         var status = {
                             'NA' : {'title': 'NA', 'class': 'bg-red'},
@@ -385,7 +385,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:15,
+                    targets: 14,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.tenant){
                             return data;
@@ -395,7 +395,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:16,
+                    targets: 15,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.contact_details){
                             return data;
@@ -405,7 +405,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:18,
+                    targets: 17,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.loc_custom_field_1){
                             return data;
@@ -415,7 +415,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:19,
+                    targets: 18,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.t_custom_field_1){
                             return data;
@@ -425,7 +425,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:20,
+                    targets: 19,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.exp_custom_field_1){
                             return data;
@@ -435,7 +435,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:21,
+                    targets: 20,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.loc_custom_field_2){
                             return data;
@@ -445,7 +445,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:22,
+                    targets: 21,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.t_custom_field_2){
                             return data;
@@ -455,7 +455,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:23,
+                    targets: 22,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.exp_custom_field_2){
                             return data;
@@ -465,7 +465,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:24,
+                    targets: 23,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.loc_custom_field_3){
                             return data;
@@ -475,7 +475,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:25,
+                    targets: 24,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.t_custom_field_3){
                             return data;
@@ -485,7 +485,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:26,
+                    targets: 25,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.exp_custom_field_3){
                             return data;
@@ -495,7 +495,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:27,
+                    targets: 26,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.loc_custom_field_4){
                             return data;
@@ -505,7 +505,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:28,
+                    targets: 27,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.t_custom_field_4){
                             return data;
@@ -515,7 +515,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:29,
+                    targets: 28,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.exp_custom_field_4){
                             return data;
@@ -525,7 +525,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:30,
+                    targets: 29,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.comments){
                             return data;
@@ -535,7 +535,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:31,
+                    targets: 30,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.service_plan){
                             return data;
@@ -545,7 +545,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:32,
+                    targets: 31,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.services){
                             return data;
@@ -555,7 +555,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:33,
+                    targets: 32,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.last_alarm_service){
                             return data;
@@ -565,7 +565,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:34,
+                    targets: 33,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.last_heater_service){
                             return data;
@@ -575,7 +575,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets:35,
+                    targets: 34,
                     render: function(data, type, full, meta) {
                         if(data == full.original_job.last_solar_cleaning_service){
                             return data;

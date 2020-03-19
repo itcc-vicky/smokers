@@ -43,7 +43,6 @@
                     <table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
                         <thead>
                             <tr>
-                                <th> Actions </th>
                                 <th> Agency Name </th>
                                 <th> Property Manager Name </th>
                                 <th> Landlord </th>
@@ -76,9 +75,10 @@
                                 <th> Comments </th>
                                 <th> Service Plan </th>
                                 <th> Services </th>
-                                <th> Last Alarm Service Date </th>
-                                <th> Last Heater Service Date </th>
-                                <th> Last Solar Cleaning Service Date </th>
+                                <th> Last Alarm Service </th>
+                                <th> Last Heater Service </th>
+                                <th> Last Solar Cleaning Service </th>
+                                <th> Actions </th>
                             </tr>
                         </thead>
                     </table>
@@ -93,7 +93,7 @@
 @push('scripts')
 
 <script>
-    window._table_targets = [ 2,3,4,5,10,12,13,16,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 ];
+    window._table_targets = [ 1,2,3,4,9,11,12,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34 ];
 </script>
 
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -161,7 +161,6 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 dataSrc: 'jobs',
             },
             columns: [
-                {data: 'id'},
                 {data: 'agency.name'},
                 {data: 'property_manager_name'},
                 {data: 'landlord'},
@@ -197,6 +196,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                 {data: 'last_alarm_service'},
                 {data: 'last_heater_service'},
                 {data: 'last_solar_cleaning_service'},
+                {data: 'id'},
             ],
 
             columnDefs: [
@@ -205,17 +205,18 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     visible: false,
                 },
                 {
-                    targets: 0,
+                    targets: 35,
                     title: 'Actions',
                     orderable: false,
                     sortable: false,
                     selector: false,
+                    width:'5%',
                     render: function(data, type, full, meta) {
                         return `<button data-toggle="tooltip" data-placement="top" title="Restore" onclick="openRestoreDialog(`+data+`);" class="btn btn-primary btn_inline">Restore</button>`;
                     },
                 },
                 {
-                    targets: [6, 7, 15],
+                    targets: [5, 6, 14],
                     render: function(data, type, full, meta) {
                         if( data != null ) {
                             return '<p class="m-0" data-toggle="tooltip" data-placement="top" title="'+data+'">'+data.substr(0,15)+' </p>';
@@ -224,21 +225,21 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     }
                 },
                 {
-                    targets: 17,
+                    targets: 16,
                     render: function(data, type, full, meta) {
-                        meta.settings.aoColumns[17].sClass = '';
+                        meta.settings.aoColumns[16].sClass = '';
                         var status = {
-                            'Compliant' : {'title': 'Compliant', 'class': 'bg-green'},
-                            'Quoted' : {'title': 'Quoted', 'class': ' bg-orange'},
-                            'Booked In' : {'title': 'Booked In', 'class': ' bg-blue'},
-                            'Overdue' : {'title': 'Overdue', 'class': ' bg-red'},
-                            'On Hold' : {'title': 'On Hold', 'class': ' bg-purple'}
+                            'Compliant' : {'title': 'Compliant', 'class': 'text-center font-bold bg-green'},
+                            'Quoted' : {'title': 'Quoted', 'class': ' text-center font-bold bg-orange'},
+                            'Booked In' : {'title': 'Booked In', 'class': ' text-center font-bold bg-blue'},
+                            'Overdue' : {'title': 'Overdue', 'class': ' text-center font-bold bg-red'},
+                            'On Hold' : {'title': 'On Hold', 'class': ' text-center font-bold bg-purple'}
                         };
                         if (typeof status[data] === 'undefined') {
                             return data;
                         }
 
-                        meta.settings.aoColumns[17].sClass = status[data].class;
+                        meta.settings.aoColumns[16].sClass = status[data].class;
                         if (data == 'Booked In') {
                             return status[data].title +'<br>'+ full.booked_date;
                         }else{
@@ -247,7 +248,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                     },
                 },
                 {
-                    targets: 14,
+                    targets: 13,
                     render: function(data, type, full, meta) {
                         var status = {
                             'NA' : {'title': 'NA', 'class': 'bg-red'},
@@ -267,7 +268,7 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
                         if (typeof status[data] === 'undefined') {
                             return data;
                         }
-                        meta.settings.aoColumns[14].sClass = status[data].class;
+                        meta.settings.aoColumns[13].sClass = status[data].class;
                         return '<span class="' + status[data].class + '">' + status[data].title + '</span>';
 
                     },
@@ -288,14 +289,14 @@ var KTDatatablesSearchOptionsAdvancedSearch = function() {
         $('.kt_search').on('click', function(e) {
             e.preventDefault();
             let status = $(this).attr('value');
-            table.column(17).search(status, false, false);
+            table.column(16).search(status, false, false);
             table.table().draw();
 
         });
 
         $('#kt_reset').on('click', function(e) {
             e.preventDefault();
-            table.column(17).search('', false, false);
+            table.column(16).search('', false, false);
             table.table().draw();
         });
 
